@@ -32,19 +32,19 @@ public class UserController {
 		return userService.getAll();
 	}
 	
-	@PostMapping({"/checkAdminThenGetAllUsers"})
-	public List<User> getAllUserByCheckAdmin(@RequestBody String token) {
-		String userName = tokenUtil.getUserNameFromToken(token);
-		User userDetails = (User) userService.loadUserByUsername(userName);
-		System.out.println(userDetails);
-		if(userDetails.getIsAdmin() != 0) {
-			return userService.getAll();
-		}
-		List<User> users = new ArrayList<User>();
-		users.add(userService.getUserById(userDetails.getId()));
-		return users;
-		
-	}
+//	@PostMapping({"/checkAdminThenGetAllUsers"})
+//	public List<User> getAllUserByCheckAdmin(@RequestBody String token) {
+//		String userName = tokenUtil.getUserNameFromToken(token);
+//		User userDetails = (User) userService.loadUserByUsername(userName);
+//		System.out.println(userDetails);
+//		if(userDetails.getIsAdmin() != 0) {
+//			return userService.getAll();
+//		}
+//		List<User> users = new ArrayList<User>();
+//		users.add(userService.getUserById(userDetails.getId()));
+//		return users;
+//		
+//	}
 	
 	
 

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -38,6 +40,9 @@ public class User implements UserDetails {
 	@NotNull
 	@Column(name = "user_name")
 	private String userName;
+	
+	@Column(name = "address")
+	private String address;
 
 	@NotNull
 	@Column(name = "email")
@@ -48,9 +53,8 @@ public class User implements UserDetails {
 	@Column(name = "password")
 	private String password;
 
-	@NotNull
-	@Column(name = "is_admin")
-	private int isAdmin;
+	@Column(name = "phone")
+	private int phone;
 
 	@Column(name = "modified_by")
 	private int modifiedBy;
@@ -58,10 +62,13 @@ public class User implements UserDetails {
 	@Column(name = "date_modify")
 	private Date dateModify;
 
-	// adding relationship between tables users and sys_privelages
-//	@ManyToMany(cascade = CascadeType.ALL)
-//	@JoinTable(name = "user_privelage", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "privelage_id"))
-//	private List<User> user;
+	// adding relationship between tables users and roles
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "role_id")
+	private Role role;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Store> stores;
 
 	public User() {
 		super();
@@ -108,11 +115,6 @@ public class User implements UserDetails {
 		this.password = password;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", email=" + email + ", password=" + password + "]";
-	}
-
 	// methods implements of UserDetails
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -144,14 +146,6 @@ public class User implements UserDetails {
 		return true;
 	}
 
-	public int getIsAdmin() {
-		return isAdmin;
-	}
-
-	public void setIsAdmin(int isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
 	public long getCode() {
 		return code;
 	}
@@ -176,12 +170,43 @@ public class User implements UserDetails {
 		this.dateModify = dateModify;
 	}
 
-//	public List<User> getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(List<User> user) {
-//		this.user = user;
-//	}
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public int getPhone() {
+		return phone;
+	}
+
+	public void setPhone(int phone) {
+		this.phone = phone;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public List<Store> getStores() {
+		return stores;
+	}
+
+	public void setStores(List<Store> stores) {
+		this.stores = stores;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", code=" + code + ", userName=" + userName + ", address=" + address + ", email="
+				+ email + ", password=" + password + ", phone=" + phone + ", modifiedBy=" + modifiedBy + ", dateModify="
+				+ dateModify + ", role=" + role + ", stores=" + stores + "]";
+	}
 
 }

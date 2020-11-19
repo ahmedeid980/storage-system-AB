@@ -62,7 +62,6 @@ public class AuthController {
 		newUser.setEmail(userUI.getEmail());
 		newUser.setUserName(userUI.getUsername());
 		newUser.setPassword(userUI.getPassword());
-		newUser.setIsAdmin(0);
 		
 		User saveUser = userService.saveUser(newUser);
 		return saveUser;

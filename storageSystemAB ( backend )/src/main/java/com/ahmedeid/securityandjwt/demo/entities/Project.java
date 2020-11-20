@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -32,6 +34,10 @@ public class Project {
 
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Bill> bills;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "store_id")
+	private Store store;
 
 	public Project() {
 		super();
@@ -76,9 +82,18 @@ public class Project {
 		this.bills = bills;
 	}
 
+	public Store getStore() {
+		return store;
+	}
+
+	public void setStore(Store store) {
+		this.store = store;
+	}
+
 	@Override
 	public String toString() {
-		return "Project [id=" + id + ", decription=" + decription + ", address=" + address + ", bills=" + bills + "]";
+		return "Project [id=" + id + ", decription=" + decription + ", address=" + address + ", bills=" + bills
+				+ ", store=" + store + "]";
 	}
 
 }

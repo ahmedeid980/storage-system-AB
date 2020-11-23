@@ -1,0 +1,14 @@
+.layout-content {
+    display: flex;
+    justify-content: space-between;
+}
+app-content {
+    width: 100%;
+}
+app-slider {
+    direction: rtl;
+    flex: 1;
+}
+router-outlet {
+    flex: 2;
+}

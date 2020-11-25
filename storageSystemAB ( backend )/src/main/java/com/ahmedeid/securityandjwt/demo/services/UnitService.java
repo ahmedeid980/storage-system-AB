@@ -35,20 +35,20 @@ public class UnitService {
 		}
 
 		// get user by id
-		public Unit getUserById(int id) {
+		public Unit getUnitById(int id) {
 			Unit unit = unitRepository.findById(id).get();
 
 			return unit;
 		}
 
 		// save new user
-		public Unit saveUser(Unit units) {
+		public Unit saveOrUpdateUnit(Unit units) {
 			Unit unit = unitRepository.save(units);
 			return unit;
 		}
 
 		// delete user
-		public void deleteUser(int id) {
+		public void deleteUnit(int id) {
 			unitRepository.deleteById(id);
 		}
 

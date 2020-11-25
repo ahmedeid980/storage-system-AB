@@ -29,20 +29,20 @@ public class IncomingCompanyService {
 		}
 
 		// get user by id
-		public IncomingCompany getUserById(int id) {
+		public IncomingCompany getIncomingCompanyById(int id) {
 			IncomingCompany incomingCompany = incomingCompanyRepository.findById(id).get();
 
 			return incomingCompany;
 		}
 
 		// save new user
-		public IncomingCompany saveUser(IncomingCompany incomingCompanies) {
+		public IncomingCompany saveOrUpIncomingCompany(IncomingCompany incomingCompanies) {
 			IncomingCompany incomingCompany = incomingCompanyRepository.save(incomingCompanies);
 			return incomingCompany;
 		}
 
 		// delete user
-		public void deleteUser(int id) {
+		public void deleteIncomingCompany(int id) {
 			incomingCompanyRepository.deleteById(id);
 		}
 

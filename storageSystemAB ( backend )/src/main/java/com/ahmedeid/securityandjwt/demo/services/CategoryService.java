@@ -27,20 +27,20 @@ public class CategoryService {
 		}
 
 		// get user by id
-		public Category getUserById(int id) {
+		public Category getCategoryById(int id) {
 			Category category = categoryRepository.findById(id).get();
 
 			return category;
 		}
 
 		// save new user
-		public Category saveUser(Category categories) {
+		public Category saveOrUpdateCategory(Category categories) {
 			Category category = categoryRepository.save(categories);
 			return category;
 		}
 
 		// delete user
-		public void deleteUser(int id) {
+		public void deleteCategory(int id) {
 			categoryRepository.deleteById(id);
 		}
 

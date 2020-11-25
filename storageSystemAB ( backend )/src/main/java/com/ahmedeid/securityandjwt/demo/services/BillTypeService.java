@@ -23,20 +23,20 @@ public class BillTypeService {
 		}
 
 		// get user by id
-		public BillType getUserById(int id) {
+		public BillType getBillTypeById(int id) {
 			BillType billType = billTypeRepository.findById(id).get();
 
 			return billType;
 		}
 
 		// save new user
-		public BillType saveUser(BillType billType) {
+		public BillType saveOrUpdateBillType(BillType billType) {
 			BillType billTypes = billTypeRepository.save(billType);
 			return billTypes;
 		}
 
 		// delete user
-		public void deleteUser(int id) {
+		public void deleteBillType(int id) {
 			billTypeRepository.deleteById(id);
 		}
 

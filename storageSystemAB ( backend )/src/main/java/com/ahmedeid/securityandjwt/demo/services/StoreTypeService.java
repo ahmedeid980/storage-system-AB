@@ -33,20 +33,20 @@ public class StoreTypeService {
 		}
 
 		// get user by id
-		public StoreType getUserById(int id) {
+		public StoreType getStoreTypeById(int id) {
 			StoreType storeType = storeTypeRepository.findById(id).get();
 
 			return storeType;
 		}
 
 		// save new user
-		public StoreType saveUser(StoreType storeTypes) {
+		public StoreType saveOrUpdateStoreType(StoreType storeTypes) {
 			StoreType storeType = storeTypeRepository.save(storeTypes);
 			return storeType;
 		}
 
 		// delete user
-		public void deleteUser(int id) {
+		public void deleteStoreType(int id) {
 			storeTypeRepository.deleteById(id);
 		}
 

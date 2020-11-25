@@ -27,20 +27,20 @@ public class ProjectService {
 		}
 
 		// get user by id
-		public Project getUserById(int id) {
+		public Project getProjectById(int id) {
 			Project project = projectRepository.findById(id).get();
 
 			return project;
 		}
 
 		// save new user
-		public Project saveUser(Project projects) {
-			Project project = projectRepository.save(projects);
-			return project;
+		public Project saveOrUpdateProject(Project project) {
+		
+			return  projectRepository.save(project);
 		}
 
 		// delete user
-		public void deleteUser(int id) {
+		public void deleteProject(int id) {
 			projectRepository.deleteById(id);
 		}
 

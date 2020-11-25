@@ -31,20 +31,20 @@ public class StoreService {
 		}
 
 		// get user by id
-		public Store getUserById(int id) {
+		public Store getStoreById(int id) {
 			Store store = storeRepository.findById(id).get();
 
 			return store;
 		}
 
 		// save new user
-		public Store saveUser(Store stores) {
+		public Store saveOrUpdateStore(Store stores) {
 			Store store = storeRepository.save(stores);
 			return store;
 		}
 
 		// delete user
-		public void deleteUser(int id) {
+		public void deleteStore(int id) {
 			storeRepository.deleteById(id);
 		}
 

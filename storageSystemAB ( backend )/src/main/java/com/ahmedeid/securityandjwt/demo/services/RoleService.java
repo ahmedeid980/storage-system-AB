@@ -29,20 +29,21 @@ public class RoleService {
 		}
 
 		// get user by id
-		public Role getUserById(int id) {
+		public Role getRoleById(int id) {
 			Role role = roleRepository.findById(id).get();
 
 			return role;
 		}
 
 		// save new user
-		public Role saveUser(Role roles) {
+		
+		public Role saveOrUpdateRole(Role roles) {
 			Role role = roleRepository.save(roles);
 			return role;
 		}
 
 		// delete user
-		public void deleteUser(int id) {
+		public void deleteRole(int id) {
 			roleRepository.deleteById(id);
 		}
 

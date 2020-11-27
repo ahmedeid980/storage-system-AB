@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "storageSystemAB": {
+    "storeSystemAB": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/storageSystemAB",
+            "outputPath": "dist/storeSystemAB",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -74,18 +74,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "storageSystemAB:build"
+            "browserTarget": "storeSystemAB:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "storageSystemAB:build:production"
+              "browserTarget": "storeSystemAB:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "storageSystemAB:build"
+            "browserTarget": "storeSystemAB:build"
           }
         },
         "test": {
@@ -100,7 +100,6 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -123,19 +122,19 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "storageSystemAB:serve"
+            "devServerTarget": "storeSystemAB:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "storageSystemAB:serve:production"
+              "devServerTarget": "storeSystemAB:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "storageSystemAB",
+  "defaultProject": "storeSystemAB",
   "cli": {
-    "analytics": "1a7f6005-28be-4631-a3d5-8187c8aaf05a"
+    "analytics": "a7eb3ad0-d6c0-429d-ac93-04680b8e128c"
   }
 }

@@ -1,0 +1,139 @@
+
+<div class="income">
+  <div class="container-fluid" style="text-align: center;">
+    <!-- <h2>Responsive Tables Using LI <small>Triggers on 767px</small></h2> -->
+    <div class="create-income">
+      <button class="btn btn-info" (click)="open(incoming)">انشاء وارد جديد</button>
+  </div>
+  <div class="search-income">
+      <label for="search"> بحث : </label>
+      <input type="search" name="search" class="input form-control" id="search">
+  </div>
+    <div class="content">
+      <ul class="responsive-table" >
+       
+        <li class="table-header" style="font-weight: bolder;">
+          <div class="col col-1">الكود</div>
+          <div class="col col-2">المخزن</div>
+          <div class="col col-3">امين المخزن</div>
+          <div class="col col-4">الشركة الموردة</div>
+        </li>
+        <div class="lists">
+        <li class="table-row">
+          <div class="col col-1" data-label="Job Id">42235</div>
+          <div class="col col-2" data-label="Customer Name">العاشر من رمضان</div>
+          <div class="col col-3" data-label="Amount">أحمد عيد</div>
+          <div class="col col-4" data-label="Payment Status">اسفلت للاسمنت ومواد البناء</div>
+        </li>
+        
+       </div>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<ng-template #incoming let-modal>
+  <div class="content-in" style="direction: rtl !important;">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">إذن استلام مهمات</h4>
+      <button type="button" class="close" aria-label="Close" style="outline: none;" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form id="income-form">
+        <div class="form-row header">
+          <div class="col-md-3 mb-3">
+            <label for="validationDefault04">مخزن :</label>
+            <select class="custom-select" id="validationDefault04" required>
+              <option selected disabled value="">أختر...</option>
+              <option>...</option>
+            </select>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="validationDefault03">رقم الأذن :</label>
+            <p class="incomeNO" id="incomeNO" required></p>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-4 mb-3">
+            <label for="validationDefault03">تاريخ الاستلام :</label>
+            <p class="incomeDate" id="incomeDate" required></p>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="validationDefault04">جهة التوريد :</label>
+            <select class="custom-select" id="validationDefault04" required>
+              <option selected disabled value="">اختر...</option>
+              <option>...</option>
+            </select>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="validationDefault04">استلمت أنا :</label>
+            <select class="custom-select" id="validationDefault04" required>
+              <option selected disabled value="">اختر...</option>
+              <option>...</option>
+            </select>
+          </div>
+          
+        </div>
+        
+          <div class="form-row">
+            <div class="col-md-4 mb-3">
+              <label for="validationDefault04">البيان :</label>
+              <select class="custom-select" id="validationDefault04" required>
+                <option selected disabled value="">اختر...</option>
+                <option>...</option>
+              </select>
+            </div>
+            <!-- <div class="col-md-4 mb-3">
+              <label for="validationDefault04">الوحدة :</label>
+              <select class="custom-select" id="validationDefault04" required>
+                <option selected disabled value="">اختر...</option>
+                <option>...</option>
+              </select>
+            </div> -->
+            <div class="col-md-4 mb-3">
+              <label for="validationDefault03">الكمية :</label>
+              <input type="text" class="form-control" id="quntityId" required>
+            </div>
+              <div class="col-md-4 mb-3">
+                <label for="validationDefault03">ملاحظات :</label>
+                <textarea type="text" class="form-control" id="notesId" required></textarea>
+              
+            </div>
+        </div>
+  
+        
+        <div class="button-income">
+          <button class="btn btn-primary" type="submit">اضف البيان</button>
+        <button class="btn btn-warning">تفريغ الحقول</button>
+        </div>
+      </form>
+      <div class="table">
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">First</th>
+              <th scope="col">Last</th>
+              <th scope="col">Handle</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <button class="btn btn-info">استلام المهمات</button>
+  </div>
+  
+
+</ng-template>

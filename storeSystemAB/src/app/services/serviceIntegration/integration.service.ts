@@ -10,11 +10,18 @@ export class IntegrationService {
 
   constructor(private http: HttpClient) { }
 
-  URI = 'http://localhost:8083/demo-0.0.1-SNAPSHOT/BackGYM/auth/'; //localhost:8080/demo-0.0.1-SNAPSHOT
-  URLIntegration = 'http://localhost:8083/demo-0.0.1-SNAPSHOT/serviceIntegration/';
+  URI = 'http://localhost:7172';
+  URLIntegration = 'http://localhost:7172';
 
   login(loginRequest: any) { // loginRequest
-    return this.http.post(this.URI+'login',loginRequest);
+    const headerDict = {
+      'content-type': 'application/json; charset=utf-8'
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    return this.http.post(this.URI+'/storageSystem/userlogin', loginRequest, requestOptions);
   }
 
   // register admin user
@@ -26,7 +33,7 @@ export class IntegrationService {
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
     };
-    return this.http.post(this.URLIntegration+'registerUserAdmin', user, requestOptions);
+    return this.http.post(this.URI+'registerUserAdmin', user, requestOptions);
   }
 
 }

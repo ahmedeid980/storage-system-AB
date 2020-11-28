@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { HttpClientModule } from '@angular/common/http';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -13,18 +15,23 @@ import { FooterParComponent } from './SSABPages/footer/footer-par/footer-par.com
 import { ContentComponent } from './SSABPages/contents/content/content.component';
 import { SliderComponent } from './SSABPages/slider/slider/slider.component';
 import { IncomingComponent } from './SSABPages/pages/incoming/incoming.component';
+import { LoginComponent } from './login/login/login.component';
+import { IntegrationService } from './services/serviceIntegration/integration.service';
+import { CustomService } from './services/custom/custom.service';
+import { LoginLayoutComponent } from './SSABLayout/login-layout/login-layout.component';
+import { ASEEncryptDecryptService } from './services/security/a-s-e-encrypt-decrypt.service';
 
 @NgModule({
   declarations: [
     AppComponent,LayoutSSABComponent,NavParComponent,FooterParComponent,
-    ContentComponent,SliderComponent,IncomingComponent
+    ContentComponent,SliderComponent,IncomingComponent, LoginComponent, LoginLayoutComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,FormsModule,ReactiveFormsModule,
-    NgbAlertModule , NgbModule
+    NgbAlertModule , NgbModule,HttpClientModule
   ],
-  providers: [],
+  providers: [IntegrationService, CustomService, ASEEncryptDecryptService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

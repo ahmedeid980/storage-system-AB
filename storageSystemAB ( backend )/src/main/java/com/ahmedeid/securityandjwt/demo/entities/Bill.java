@@ -1,5 +1,6 @@
 package com.ahmedeid.securityandjwt.demo.entities;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -29,24 +30,24 @@ public class Bill {
 	@Column(name = "code_generation")
 	private String codeGeneration;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "store_id")
 	private Store store;
 
-	@OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<BillProduct> billProducts;
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "project_id")
 	private Project project;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "incoming_company_id")
 	private IncomingCompany incomingCompany;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "bill_type_id")
 	private BillType billType;
+
+	@JoinColumn(name = "created_date")
+	private Date createdDate;
 
 	public Bill() {
 		super();
@@ -57,7 +58,6 @@ public class Bill {
 		super();
 		this.codeGeneration = codeGeneration;
 		this.store = store;
-		this.billProducts = billProducts;
 		this.project = project;
 		this.incomingCompany = incomingCompany;
 		this.billType = billType;
@@ -87,14 +87,6 @@ public class Bill {
 		this.store = store;
 	}
 
-	public List<BillProduct> getBillProducts() {
-		return billProducts;
-	}
-
-	public void setBillProducts(List<BillProduct> billProducts) {
-		this.billProducts = billProducts;
-	}
-
 	public Project getProject() {
 		return project;
 	}
@@ -119,11 +111,19 @@ public class Bill {
 		this.billType = billType;
 	}
 
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
 	@Override
 	public String toString() {
-		return "Bill [id=" + id + ", codeGeneration=" + codeGeneration + ", store=" + store + ", billProducts="
-				+ billProducts + ", project=" + project + ", incomingCompany=" + incomingCompany + ", billType="
-				+ billType + "]";
+		return "Bill [id=" + id + ", codeGeneration=" + codeGeneration + ", store=" + store + ", project=" + project
+				+ ", incomingCompany=" + incomingCompany + ", billType=" + billType + ", createdDate=" + createdDate
+				+ "]";
 	}
 
 }

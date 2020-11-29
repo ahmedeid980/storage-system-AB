@@ -27,8 +27,8 @@ public class Role {
 	@Column(name = "decription")
 	private String decription;
 
-	@OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<User> users;
+//	@OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	private List<User> users;
 
 	public Role() {
 		super();
@@ -37,7 +37,7 @@ public class Role {
 	public Role(String decription, List<User> users) {
 		super();
 		this.decription = decription;
-		this.users = users;
+//		this.users = users;
 	}
 
 	public int getId() {
@@ -56,17 +56,17 @@ public class Role {
 		this.decription = decription;
 	}
 
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
+//	public List<User> getUsers() {
+//		return users;
+//	}
+//
+//	public void setUsers(List<User> users) {
+//		this.users = users;
+//	}
 
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", decription=" + decription + ", users=" + users + "]";
+		return "Role [id=" + id + ", decription=" + decription + "]";
 	}
 
 }

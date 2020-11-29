@@ -27,8 +27,8 @@ public class BillType {
 	@Column(name = "decription")
 	private String decription;
 
-	@OneToMany(mappedBy = "billType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Bill> bills;
+//	@OneToMany(mappedBy = "billType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	private List<Bill> bills;
 
 	public BillType() {
 		super();
@@ -37,7 +37,7 @@ public class BillType {
 	public BillType(String decription, List<Bill> bills) {
 		super();
 		this.decription = decription;
-		this.bills = bills;
+//		this.bills = bills;
 	}
 
 	public int getId() {
@@ -56,17 +56,17 @@ public class BillType {
 		this.decription = decription;
 	}
 
-	public List<Bill> getBills() {
-		return bills;
-	}
-
-	public void setBills(List<Bill> bills) {
-		this.bills = bills;
-	}
+//	public List<Bill> getBills() {
+//		return bills;
+//	}
+//
+//	public void setBills(List<Bill> bills) {
+//		this.bills = bills;
+//	}
 
 	@Override
 	public String toString() {
-		return "BillType [id=" + id + ", decription=" + decription + ", bills=" + bills + "]";
+		return "BillType [id=" + id + ", decription=" + decription + "]";
 	}
 
 }

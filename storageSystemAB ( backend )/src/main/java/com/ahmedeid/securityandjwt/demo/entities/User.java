@@ -12,11 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -63,12 +60,9 @@ public class User implements UserDetails {
 	private Date dateModify;
 
 	// adding relationship between tables users and roles
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "role_id")
 	private Role role;
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Store> stores;
 
 	public User() {
 		super();
@@ -79,7 +73,6 @@ public class User implements UserDetails {
 		this.userName = userName;
 		this.email = email;
 		this.password = password;
-//		this.timeCreated = new Date();
 	}
 
 	public int getId() {
@@ -194,19 +187,11 @@ public class User implements UserDetails {
 		this.role = role;
 	}
 
-	public List<Store> getStores() {
-		return stores;
-	}
-
-	public void setStores(List<Store> stores) {
-		this.stores = stores;
-	}
-
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", code=" + code + ", userName=" + userName + ", address=" + address + ", email="
 				+ email + ", password=" + password + ", phone=" + phone + ", modifiedBy=" + modifiedBy + ", dateModify="
-				+ dateModify + ", role=" + role + ", stores=" + stores + "]";
+				+ dateModify + ", role=" + role + "]";
 	}
 
 }

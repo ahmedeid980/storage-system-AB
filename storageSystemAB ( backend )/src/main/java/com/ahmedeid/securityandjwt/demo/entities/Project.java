@@ -32,8 +32,8 @@ public class Project {
 	@Column(name = "address")
 	private String address;
 
-	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Bill> bills;
+//	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	private List<Bill> bills;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "store_id")
@@ -47,7 +47,6 @@ public class Project {
 		super();
 		this.decription = decription;
 		this.address = address;
-		this.bills = bills;
 	}
 
 	public int getId() {
@@ -74,13 +73,13 @@ public class Project {
 		this.address = address;
 	}
 
-	public List<Bill> getBills() {
-		return bills;
-	}
-
-	public void setBills(List<Bill> bills) {
-		this.bills = bills;
-	}
+//	public List<Bill> getBills() {
+//		return bills;
+//	}
+//
+//	public void setBills(List<Bill> bills) {
+//		this.bills = bills;
+//	}
 
 	public Store getStore() {
 		return store;
@@ -92,7 +91,7 @@ public class Project {
 
 	@Override
 	public String toString() {
-		return "Project [id=" + id + ", decription=" + decription + ", address=" + address + ", bills=" + bills
+		return "Project [id=" + id + ", decription=" + decription + ", address=" + address
 				+ ", store=" + store + "]";
 	}
 

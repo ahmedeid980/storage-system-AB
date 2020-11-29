@@ -29,12 +29,9 @@ public class Category {
 	@Column(name = "decription")
 	private String decription;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "store_type_id")
 	private StoreType storeType;
-
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<BillProduct> billProducts;
 
 	public Category() {
 		super();
@@ -44,7 +41,6 @@ public class Category {
 		super();
 		this.decription = decription;
 		this.storeType = storeType;
-		this.billProducts = billProducts;
 	}
 
 	public int getId() {
@@ -71,18 +67,9 @@ public class Category {
 		this.storeType = storeType;
 	}
 
-	public List<BillProduct> getBillProducts() {
-		return billProducts;
-	}
-
-	public void setBillProducts(List<BillProduct> billProducts) {
-		this.billProducts = billProducts;
-	}
-
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", decription=" + decription + ", storeType=" + storeType + ", billProducts="
-				+ billProducts + "]";
+		return "Category [id=" + id + ", decription=" + decription + ", storeType=" + storeType + "]";
 	}
 
 }

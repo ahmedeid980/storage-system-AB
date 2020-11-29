@@ -33,9 +33,6 @@ public class IncomingCompany {
 	@Column(name = "phone")
 	private int phone;
 
-	@OneToMany(mappedBy = "incomingCompany", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Bill> bills;
-
 	public IncomingCompany() {
 		super();
 	}
@@ -45,7 +42,6 @@ public class IncomingCompany {
 		this.decription = decription;
 		this.address = address;
 		this.phone = phone;
-		this.bills = bills;
 	}
 
 	public int getId() {
@@ -80,18 +76,18 @@ public class IncomingCompany {
 		this.phone = phone;
 	}
 
-	public List<Bill> getBills() {
-		return bills;
-	}
-
-	public void setBills(List<Bill> bills) {
-		this.bills = bills;
-	}
+//	public List<Bill> getBills() {
+//		return bills;
+//	}
+//
+//	public void setBills(List<Bill> bills) {
+//		this.bills = bills;
+//	}
 
 	@Override
 	public String toString() {
 		return "IncomingCompany [id=" + id + ", decription=" + decription + ", address=" + address + ", phone=" + phone
-				+ ", bills=" + bills + "]";
+			 + "]";
 	}
 
 }

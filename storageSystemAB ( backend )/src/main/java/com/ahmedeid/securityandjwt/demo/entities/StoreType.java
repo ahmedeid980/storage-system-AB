@@ -33,12 +33,9 @@ public class StoreType {
 	@Column(name = "location")
 	private String location;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "store_id")
 	private Store store;
-
-	@OneToMany(mappedBy = "storeType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Category> categories;
 
 	public StoreType() {
 		super();
@@ -49,7 +46,6 @@ public class StoreType {
 		this.decription = decription;
 		this.location = location;
 		this.store = store;
-		this.categories = categories;
 	}
 
 	public int getId() {
@@ -84,18 +80,10 @@ public class StoreType {
 		this.store = store;
 	}
 
-	public List<Category> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
-	}
-
 	@Override
 	public String toString() {
 		return "StoreType [id=" + id + ", decription=" + decription + ", location=" + location + ", store=" + store
-				+ ", categories=" + categories + "]";
+				+"]";
 	}
 
 }

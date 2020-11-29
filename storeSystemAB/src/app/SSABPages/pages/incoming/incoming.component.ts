@@ -14,11 +14,7 @@ export class IncomingComponent implements OnInit {
 
   open(incoming: any) {
     this.modalService.open(incoming, { size: 'xl' });
-    // this.modalService.open(incoming, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-    //   this.closeResult = `Closed with: ${result}`;
-    // }, (reason) => {
-    //   this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    // });
+    
   }
 
   private getDismissReason(reason: any): string {

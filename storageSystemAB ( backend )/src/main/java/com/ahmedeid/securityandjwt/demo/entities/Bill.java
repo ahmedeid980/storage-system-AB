@@ -46,8 +46,11 @@ public class Bill {
 	@JoinColumn(name = "bill_type_id")
 	private BillType billType;
 
-	@JoinColumn(name = "created_date")
+	@Column(name = "created_date")
 	private Date createdDate;
+	
+	@OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<BillProduct> billProducts;
 
 	public Bill() {
 		super();
@@ -117,6 +120,14 @@ public class Bill {
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	public List<BillProduct> getBillProducts() {
+		return billProducts;
+	}
+
+	public void setBillProducts(List<BillProduct> billProducts) {
+		this.billProducts = billProducts;
 	}
 
 	@Override

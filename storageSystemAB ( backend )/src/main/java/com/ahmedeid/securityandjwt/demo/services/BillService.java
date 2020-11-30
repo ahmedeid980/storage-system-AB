@@ -24,21 +24,21 @@ public class BillService {
 			return bill;
 		}
 
-		// get user by id
-		public Bill getUserById(int id) {
+		// get Bill by id
+		public Bill getBillById(int id) {
 			Bill bill = billRepository.findById(id).get();
 
 			return bill;
 		}
 
 		// save new user
-		public Bill saveUser(Bill bills) {
+		public Bill saveOrUpdateBill(Bill bills) {
 			Bill bill = billRepository.save(bills);
 			return bill;
 		}
 
 		// delete user
-		public void deleteUser(int id) {
+		public void deleteBill(int id) {
 			billRepository.deleteById(id);
 		}
 

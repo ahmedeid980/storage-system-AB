@@ -22,7 +22,6 @@ public class BillProduct {
 	@Column(name = "id")
 	private int id;
 
-	@NotNull
 	@Column(name = "item")
 	private String item;
 

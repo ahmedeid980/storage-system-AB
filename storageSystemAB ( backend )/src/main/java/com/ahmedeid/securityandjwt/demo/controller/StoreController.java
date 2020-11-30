@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ahmedeid.securityandjwt.demo.entities.Store;
+import com.ahmedeid.securityandjwt.demo.repository.SqlStatement;
 import com.ahmedeid.securityandjwt.demo.repository.StoreRepository;
 import com.ahmedeid.securityandjwt.demo.services.StoreService;
 
@@ -23,6 +24,9 @@ public class StoreController {
 	
 	@Autowired
 	private StoreService storeService;
+	
+	@Autowired
+	private SqlStatement sql;
 	
 	@GetMapping("/")
 	public List<Store> getAll()
@@ -36,6 +40,13 @@ public class StoreController {
 	{
 		
 		return storeService.getStoreById(storeId);
+	}
+	
+	@GetMapping("/getStoreByUserId/{userId}")
+	public Store getStoreByUserId(@PathVariable("userId") int userId)
+	{
+		Store store = sql.getStoreByUserId(userId);
+		return (store); 
 	}
 	
 	@PostMapping("/")

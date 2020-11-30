@@ -28,14 +28,15 @@ export class LoginComponent implements OnInit {
   login() {
     if(this.formGroup.valid) {
       this.integration.login(this.formGroup.value).subscribe( (userLogin: any) => {
-        this.userService.changeUserStatus(userLogin);
-        this.user = userLogin;
-        this.userService.userStatus = true;
         
         if (userLogin) {
+          this.userService.changeUserStatus(userLogin);
+          this.user = userLogin;
+          this.userService.userStatus = true;
           this.router.navigate(['/incoming']);
           this.store.storeElementWthoutSecret('SSAB-u-s',this.userService.userStatus);
           this.store.storeElement('SSAB-u',userLogin);
+          this.store.storeElement('SSAB-t',userLogin.token);
         } 
       }, (error) => {
         this.message = 'خطأ في اسم المستخدم او كلمة المرور';

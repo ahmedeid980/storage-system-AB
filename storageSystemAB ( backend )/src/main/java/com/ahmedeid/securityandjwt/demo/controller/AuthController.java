@@ -1,5 +1,7 @@
 package com.ahmedeid.securityandjwt.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -7,16 +9,25 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ahmedeid.securityandjwt.demo.entities.Category;
+import com.ahmedeid.securityandjwt.demo.entities.IncomingCompany;
+import com.ahmedeid.securityandjwt.demo.entities.Store;
 import com.ahmedeid.securityandjwt.demo.entities.User;
+import com.ahmedeid.securityandjwt.demo.repository.SqlStatement;
 import com.ahmedeid.securityandjwt.demo.security.JwtResponse;
 import com.ahmedeid.securityandjwt.demo.security.LoginRequest;
 import com.ahmedeid.securityandjwt.demo.security.TokenUtil;
+import com.ahmedeid.securityandjwt.demo.services.CategoryService;
+import com.ahmedeid.securityandjwt.demo.services.IncomingCompanyService;
 import com.ahmedeid.securityandjwt.demo.services.UserService;
+import com.ahmedeid.securityandjwt.demo.uibean.IncomingToUIBean;
 import com.ahmedeid.securityandjwt.demo.uibean.UserUIBean;
 
 @CrossOrigin
@@ -29,6 +40,15 @@ public class AuthController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private IncomingCompanyService incomingCompanyService;
+	
+	@Autowired
+	CategoryService categoryService;
+	
+	@Autowired
+	private SqlStatement sql;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -65,6 +85,22 @@ public class AuthController {
 		
 		User saveUser = userService.saveUser(newUser);
 		return saveUser;
+		
+	}
+	
+	@GetMapping("/getIncomingDataToUIBean/{userId}")
+	public IncomingToUIBean getIncomingDataToUIBean(@PathVariable("userId") int userId) {
+		
+		Store stores = sql.getStoreByUserId(userId);
+		List<IncomingCompany> incomingCompanies = incomingCompanyService.getAll();
+		List<Category> categories = categoryService.getAll();
+		
+		IncomingToUIBean incomingToUIBean = new IncomingToUIBean();
+		incomingToUIBean.setStores(stores);
+		incomingToUIBean.setCategories(categories);
+		incomingToUIBean.setIncomingCompanise(incomingCompanies);
+		
+		return incomingToUIBean;
 		
 	}
 

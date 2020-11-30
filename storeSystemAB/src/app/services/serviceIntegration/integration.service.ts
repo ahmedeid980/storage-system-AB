@@ -27,13 +27,24 @@ export class IntegrationService {
   // register admin user
   reigsterUserAdmin(user: any, token: string) {
     const headerDict = {
-      'Authorization': 'bearer '+token
+      'Authorization': 'ahmbas '+token
     }
 
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
     };
     return this.http.post(this.URI+'registerUserAdmin', user, requestOptions);
+  }
+
+  getIncomingDataToUIBean(userId: number, token: string) {
+    const headerDict = {
+      'Authorization': 'ahmbas '+token
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    return this.http.get(this.URI+'/storageSystem/userlogin/getIncomingDataToUIBean/'+userId, requestOptions);
   }
 
 }

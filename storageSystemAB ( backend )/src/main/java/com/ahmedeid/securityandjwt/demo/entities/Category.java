@@ -32,6 +32,10 @@ public class Category {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "store_type_id")
 	private StoreType storeType;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "unit_id")
+	private Unit unit;
 
 	public Category() {
 		super();
@@ -65,6 +69,14 @@ public class Category {
 
 	public void setStoreType(StoreType storeType) {
 		this.storeType = storeType;
+	}
+
+	public Unit getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Unit unit) {
+		this.unit = unit;
 	}
 
 	@Override

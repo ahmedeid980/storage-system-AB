@@ -177,3 +177,19 @@ h2 small {
     margin-right: 15px;
   }
 }
+label {
+  color: rgb(49, 49, 49);
+  font-weight: bolder;
+}
+input.ng-touched.ng-invalid, select.ng-touched.ng-invalid {
+  border: 1px solid rgb(255, 65, 65);
+}
+input.ng-dirty, select.ng-dirty {
+  border: 1px solid rgb(99, 99, 99);
+}
+.flex-form {
+  display: flex;
+}
+p {
+  margin-right: 10px;
+}

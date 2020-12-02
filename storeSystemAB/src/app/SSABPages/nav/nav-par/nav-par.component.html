@@ -33,12 +33,14 @@
        
       </ul>
       <ul class="navbar-nav ">
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            <i class="fa fa-bell">
-              <span class="badge badge-info">11</span>
+        <!-- <li class="nav-item" placement="bottom" ngbTooltip="الواردات وعددها"> -->
+        <li class="nav-item" placement="bottom" placement="bottom"
+        ngbPopover="الواردات الخاصة بك والمشروع القائم , يمكنك ان تجد التفاصيل بالنقر على الكود الخاص بها داخل الجدول المدرج" popoverTitle="الواردات وعددها">
+          <a class="nav-link">
+            <i class="fa fa-arrow-circle-right">
+              <span class="badge badge-success">{{incomingBillLength}}</span>
             </i>
-            Test
+            الواردات
           </a>
         </li>
         <li class="nav-item">

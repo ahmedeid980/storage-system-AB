@@ -59,4 +59,15 @@ export class IntegrationService {
     return this.http.post(this.URI+'/bill/addIncoming/',bill , requestOptions);
   }
 
+  getListOfBills(token: string) {
+    const headerDict = {
+      'Authorization': 'ahmbas '+token
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    return this.http.get(this.URI+'/bill/', requestOptions);
+  }
+
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StoreDataService } from 'src/app/services/storage/store-data.service';
 
 @Component({
   selector: 'app-nav-par',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavParComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store: StoreDataService) { }
 
+  incomingBillLength: any;
   ngOnInit(): void {
+    this.incomingBillLength = this.store.getElementWthoutSecret('SSAB-i-l');
   }
 
 }

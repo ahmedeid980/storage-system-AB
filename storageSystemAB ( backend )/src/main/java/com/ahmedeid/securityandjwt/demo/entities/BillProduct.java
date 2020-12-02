@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
@@ -41,6 +42,7 @@ public class BillProduct {
 			CascadeType.REFRESH
 	})
 	@JoinColumn(name = "bill_id", referencedColumnName = "id")
+	@JsonBackReference
 	private Bill bill;
 
 	public BillProduct() {

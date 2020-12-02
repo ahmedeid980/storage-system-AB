@@ -3,7 +3,9 @@
   <div class="container-fluid" style="text-align: center;">
     <!-- <h2>Responsive Tables Using LI <small>Triggers on 767px</small></h2> -->
     <div class="create-income">
-      <button class="btn btn-info" (click)="open(incoming)">انشاء وارد جديد</button>
+      <button class="btn btn-info" (click)="open(incoming)" 
+      placement="bottom" ngbTooltip="يمكنك بالنقر عليه ان تنشأ اذن استلام للوردات"
+      >انشاء وارد جديد</button>
   </div>
   <div class="search-income">
       <label for="search"> بحث : </label>
@@ -17,13 +19,15 @@
           <div class="col col-2">المخزن</div>
           <div class="col col-3">امين المخزن</div>
           <div class="col col-4">الشركة الموردة</div>
+          <div class="col col-4">تاريخ الوارد</div>
         </li>
         <div class="lists">
-        <li class="table-row">
-          <div class="col col-1" data-label="Job Id">42235</div>
-          <div class="col col-2" data-label="Customer Name">العاشر من رمضان</div>
-          <div class="col col-3" data-label="Amount">أحمد عيد</div>
-          <div class="col col-4" data-label="Payment Status">اسفلت للاسمنت ومواد البناء</div>
+        <li class="table-row" *ngFor='let billIncome of bill; let i = index' (click)='getIncomToDetails(i)'>
+          <div class="col col-1" data-label="Job Id">{{billIncome.codeGeneration}}</div>
+          <div class="col col-2" data-label="Customer Name">{{billIncome.store.decription}}</div>
+          <div class="col col-3" data-label="Amount">{{billIncome.store.user.userName}}</div>
+          <div class="col col-4" data-label="Payment Status">{{billIncome.incomingCompany.decription}}</div>
+          <div class="col col-4" data-label="Payment Status">{{billIncome.createdDate | date:'dd/MM/yyyy , hh:mm a'}}</div>
         </li>
         
        </div>

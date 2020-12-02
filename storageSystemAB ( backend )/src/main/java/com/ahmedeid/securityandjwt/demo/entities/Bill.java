@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
@@ -62,10 +63,12 @@ public class Bill {
 	@Column(name = "created_date")
 	private Date createdDate;
 	
-	@OneToMany(mappedBy = "bill", fetch = FetchType.EAGER,cascade = {
+	@OneToMany(mappedBy = "bill"
+			, fetch = FetchType.EAGER,cascade = {
 			CascadeType.MERGE,
 			CascadeType.REFRESH
 	})
+	@JsonBackReference
 	private List<BillProduct> billProducts;
 
 	public Bill() {

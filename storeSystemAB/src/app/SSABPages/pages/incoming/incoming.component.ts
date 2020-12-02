@@ -52,6 +52,10 @@ export class IncomingComponent implements OnInit {
         console.log(this.storeId);
         this.date = new Date();
       }
+    }, error => {
+      if(error) {
+        this.custom.notificationStatus_success_OR_info_OR_error('حدث خطأ في النظام' , 'خطأ' , 'error');
+      }
     });
   }
 
@@ -112,8 +116,28 @@ export class IncomingComponent implements OnInit {
     this.lists.splice(index,1);
   }
   token: any;
+  bill: any;
   ngOnInit(): void {
     this.token = this.store.getStoreElement('SSAB-t');
+    this.getListOfBills();
+  }
+
+  getListOfBills() {
+    this.integration.getListOfBills(this.token).subscribe((bills: any) => {
+      if(bills) {
+        this.bill = bills;
+        this.store.storeElementWthoutSecret('SSAB-i-l', this.bill.length);
+      }
+    },error => {
+      if(error) {
+        this.custom.notificationStatus_success_OR_info_OR_error('حدث خطأ في النظام' , 'خطأ' , 'error');
+      }
+    });
+  }
+
+  getIncomToDetails(index: number) {
+    this.rowToUpdate = this.bill[index];
+    console.log(this.rowToUpdate);
   }
   
   addIncoming() {
@@ -128,6 +152,9 @@ export class IncomingComponent implements OnInit {
         this.resetAllFields();
         this.lists = [];
         this.modalService.dismissAll();
+        this.getListOfBills();
+      }, error => {
+        this.custom.notificationStatus_success_OR_info_OR_error('حدث خطا عند اضافة البيانات' , 'خطأ' , 'error');
       });
     } else {
       this.custom.notificationStatus_success_OR_info_OR_error( 'يجب اداخل جميع الحقول المطلوبة','أهلا', 'info');

@@ -20,19 +20,16 @@ public class WrapperManager {
 		Bill bill = new Bill();
 
 		if(incoming_bean.getBillType() != 0) {
-			System.out.println("incoming_bean.getBillType() : "+incoming_bean.getBillType());
 			BillType billType = new BillType();
 			billType.setId(incoming_bean.getBillType());
 			bill.setBillType(billType);
 		}
 		
 		if(incoming_bean.getCodeGeneration() != null && !incoming_bean.getCodeGeneration().equals("")) {
-			System.out.println("incoming_bean.getCodeGeneration() : "+incoming_bean.getCodeGeneration());
 			bill.setCodeGeneration(incoming_bean.getCodeGeneration());
 		}
 		
 		if(incoming_bean.getIncomingCompany() != 0) {
-			System.out.println("incoming_bean.getIncomingCompany() : "+incoming_bean.getIncomingCompany());
 			IncomingCompany incomingCompany = new IncomingCompany();
 			incomingCompany.setId(incoming_bean.getIncomingCompany());
 			bill.setIncomingCompany(incomingCompany);
@@ -41,7 +38,6 @@ public class WrapperManager {
 		bill.setCreatedDate(new Date());
 
 		if(incoming_bean.getStoreId() != 0) {
-			System.out.println("incoming_bean.getStoreId() : "+incoming_bean.getStoreId());
 			Store store = new Store();
 			store.setId(incoming_bean.getStoreId());
 			bill.setStore(store);
@@ -49,7 +45,6 @@ public class WrapperManager {
 		
 		List<BillProduct> billProducts = new ArrayList<BillProduct>();
 		if(!incoming_bean.getListOfBillCategory().isEmpty() && incoming_bean.getListOfBillCategory() != null) {
-			System.out.println("incoming_bean.getListOfBillCategory() : "+incoming_bean.getListOfBillCategory().toString());
 			for(ListOfBillCategory listOfBillCategory: incoming_bean.getListOfBillCategory()) {
 				BillProduct billProduct = new BillProduct();
 				Category category = new Category();
@@ -64,7 +59,6 @@ public class WrapperManager {
 				
 				billProducts.add(billProduct);
 			}
-			System.out.println("here added .. ");
 			bill.setBillProducts(billProducts);
 		}
 		return bill;

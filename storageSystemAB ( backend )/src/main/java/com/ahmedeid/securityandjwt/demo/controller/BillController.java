@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ahmedeid.securityandjwt.demo.entities.Bill;
+import com.ahmedeid.securityandjwt.demo.entities.BillProduct;
+import com.ahmedeid.securityandjwt.demo.services.BillProductService;
 import com.ahmedeid.securityandjwt.demo.services.BillService;
+import com.ahmedeid.securityandjwt.demo.services.IncomingCompanyService;
 import com.ahmedeid.securityandjwt.demo.uibean.IncomingBean;
+import com.ahmedeid.securityandjwt.demo.uibean.ListOfBillCategory;
 import com.ahmedeid.securityandjwt.demo.wrapper.WrapperManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,62 +26,65 @@ import com.google.gson.GsonBuilder;
 @RestController
 @RequestMapping(value = "/bill")
 public class BillController {
-	
+
 	@Autowired
 	private BillService billService;
-	
+
+	@Autowired
+	private BillProductService billProductsService;
+
+	@Autowired
+	private IncomingCompanyService incomingCompanyService;
+
 	@GetMapping("/")
-	public List<Bill> getAll()
-	{
+	public List<Bill> getAll() {
 		return billService.getAll();
 	}
-	
+
 	@GetMapping("/{id}")
-	public Bill getBillById(@PathVariable("id") int id)
-	{
-		return  billService.getBillById(id);
+	public Bill getBillById(@PathVariable("id") int id) {
+		return billService.getBillById(id);
 	}
-	
+
 	@PostMapping("/saveBill")
-	public Bill saveBill(@RequestBody Bill bill)
-	{
+	public Bill saveBill(@RequestBody Bill bill) {
 		return billService.saveOrUpdateBill(bill);
 	}
-	
+
 	@PostMapping("/addIncoming")
-	public Bill addIncomingBill(@RequestBody String incomingBean)
-	{
-		
-		System.out.println(incomingBean.toString() );
+	public Bill addIncomingBill(@RequestBody String incomingBean) {
+
+		System.out.println(incomingBean.toString());
 		Gson gson = null;
 		IncomingBean incoming_bean = new IncomingBean();
 		Bill bill = null;
 		Bill bills = null;
-		
+
 		try {
-			
+
 			GsonBuilder gsonBuilder = new GsonBuilder();
 			gson = gsonBuilder.create();
 			incoming_bean = gson.fromJson(incomingBean, IncomingBean.class);
-			
-			
+
 			WrapperManager wrapperManager = new WrapperManager();
 			bill = wrapperManager.wrapperUIToDB(incoming_bean);
-			
-			System.out.println("bill : ");
-			System.out.println(bill.toString());
-			
+
 			bills = billService.saveOrUpdateBill(bill);
-			
-			System.out.println("bills : ");
-			System.out.println(bills.toString());
-		}catch(Exception e) {
+			Bill billId = new Bill();
+			billId.setId(bills.getId());
+			for (int i = 0; i < bill.getBillProducts().size(); i++) {
+
+				bill.getBillProducts().get(i).setBill(billId);
+			}
+			billProductsService.saveAll(bill.getBillProducts());
+
+			bills.setIncomingCompany(incomingCompanyService.getIncomingCompanyById(bills.getIncomingCompany().getId()));
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 		return bills;
 	}
-	
-	
-	
+
 }

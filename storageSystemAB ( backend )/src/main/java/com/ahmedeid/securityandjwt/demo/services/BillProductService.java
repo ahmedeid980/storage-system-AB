@@ -10,32 +10,37 @@ import com.ahmedeid.securityandjwt.demo.repository.BillProductRepository;
 
 @Service
 public class BillProductService {
-	
+
 	@Autowired
 	private BillProductRepository billProductRepository;
-	
+
 	// get all users Lookup
-		public List<BillProduct> getAll() {
-			List<BillProduct> billProducts = billProductRepository.findAll();
-			return billProducts;
-		}
+	public List<BillProduct> getAll() {
+		List<BillProduct> billProducts = billProductRepository.findAll();
+		return billProducts;
+	}
 
-		// get user by id
-		public BillProduct getUserById(int id) {
-			BillProduct billProducts = billProductRepository.findById(id).get();
+	// get user by id
+	public BillProduct getBillProductById(int id) {
+		BillProduct billProducts = billProductRepository.findById(id).get();
 
-			return billProducts;
-		}
+		return billProducts;
+	}
 
-		// save new user
-		public BillProduct saveUser(BillProduct billProduct) {
-			BillProduct billProducts = billProductRepository.save(billProduct);
-			return billProducts;
-		}
+	// save new user
+	public BillProduct saveOrUpdateBillProduct(BillProduct billProduct) {
+		BillProduct billProducts = billProductRepository.save(billProduct);
+		return billProducts;
+	}
 
-		// delete user
-		public void deleteUser(int id) {
-			billProductRepository.deleteById(id);
-		}
+	// delete user
+	public void deleteBillProduct(int id) {
+		billProductRepository.deleteById(id);
+	}
 
+	// get all users Lookup
+	public List<BillProduct> saveAll(List<BillProduct> billProducts) {
+		List<BillProduct> billProductList = billProductRepository.saveAll(billProducts);
+		return billProductList;
+	}
 }

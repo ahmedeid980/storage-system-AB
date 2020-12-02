@@ -27,14 +27,14 @@ public class BillType {
 	@Column(name = "decription")
 	private String decription;
 
-//	@OneToMany(mappedBy = "billType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	@OneToMany(mappedBy = "billType", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //	private List<Bill> bills;
 
 	public BillType() {
 		super();
 	}
 
-	public BillType(String decription, List<Bill> bills) {
+	public BillType(String decription) {
 		super();
 		this.decription = decription;
 //		this.bills = bills;

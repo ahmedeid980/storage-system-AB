@@ -1,11 +1,11 @@
 package com.ahmedeid.securityandjwt.demo.uibean;
 
-public class CategoryUIBean {
+public class CategoryObj {
 	
 	private String decription ;
 	private Integer id;
 	
-	public CategoryUIBean()
+	public CategoryObj()
 	{
 		
 	}

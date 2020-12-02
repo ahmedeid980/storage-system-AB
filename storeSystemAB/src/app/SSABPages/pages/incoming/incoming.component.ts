@@ -5,6 +5,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { IncomingData } from 'src/app/classes/incoming-data';
 import { IntegrationService } from 'src/app/services/serviceIntegration/integration.service';
 import { StoreDataService } from 'src/app/services/storage/store-data.service';
+import { CustomService } from '../../../services/custom/custom.service';
 
 @Component({
   selector: 'app-incoming',
@@ -16,31 +17,39 @@ export class IncomingComponent implements OnInit {
   formGroup = new FormGroup({
     'codeGeneration': new FormControl('',[Validators.required]),
     'incomingCompany': new FormControl('',[Validators.required]),
-    'store': new FormControl('',[Validators.required]),
+    'storeId': new FormControl('',[Validators.required]),
     'billType': new FormControl('',[Validators.required]),
     'project': new FormControl('',[Validators.required]),
+    'bill': new FormControl('',[Validators.required]),
+    'listOfBillCategory': new FormControl('')
+    
+  });
+
+  tableFormGroup = new FormGroup({
     'quantity': new FormControl('',[Validators.required]),
     'notes': new FormControl(''),
     'category': new FormControl('',[Validators.required]),
-    'bill': new FormControl('',[Validators.required])
-    
   });
 
   closeResult = '';
   user: any;
   constructor(private modalService: NgbModal,
     private integration: IntegrationService,
-    private store: StoreDataService) {
+    private store: StoreDataService,
+    private custom: CustomService) {
 
       this.user = this.store.getStoreElement('SSAB-u');
     }
 
     income: IncomingData = new IncomingData;
     date: Date | undefined;
+    storeId: any;
   getIncomingDataToUIBean() {
     this.integration.getIncomingDataToUIBean(this.user.user.id, this.user.token).subscribe((IncomingData: any) => {
       if(IncomingData) {
         this.income = IncomingData;
+        this.storeId = IncomingData.stores.id;
+        console.log(this.storeId);
         this.date = new Date();
       }
     });
@@ -72,22 +81,22 @@ export class IncomingComponent implements OnInit {
   }
   
   addCategories() {
-    if(this.formGroup.get('quantity')?.value &&
-    this.formGroup.get('category')?.value) {
+    if(this.tableFormGroup.get('quantity')?.value &&
+    this.tableFormGroup.get('category')?.value) {
 
-      const newRow = new CategoryList(this.categoryName,this.formGroup.get('quantity')?.value,
-      this.formGroup.get('notes')?.value,this.unit, this.formGroup.get('category')?.value);
+      const newRow = new CategoryList(this.categoryName,this.tableFormGroup.get('quantity')?.value,
+      this.tableFormGroup.get('notes')?.value,this.unit, this.tableFormGroup.get('category')?.value);
       this.lists.push(newRow);
       this.resettableinputs();
     } else {
-      alert('يجب اداخل جميع الحقول المطلوبة');
+      this.custom.notificationStatus_success_OR_info_OR_error( 'يجب اداخل جميع الحقول المطلوبة','أهلا', 'info');
     }
   }
 
   resettableinputs() {
-    this.formGroup.get('category')?.setValue(null);
-    this.formGroup.get('quantity')?.setValue(null);
-    this.formGroup.get('notes')?.setValue(null);
+    this.tableFormGroup.get('category')?.setValue(null);
+    this.tableFormGroup.get('quantity')?.setValue(null);
+    this.tableFormGroup.get('notes')?.setValue(null);
   }
 
   removeDTRow(index: any) {
@@ -97,13 +106,37 @@ export class IncomingComponent implements OnInit {
   rowToUpdate: any;
   getTDToUpdate(index: any) {
     this.rowToUpdate = this.lists[index];
-    this.formGroup.get('category')?.setValue(this.rowToUpdate.categoryObj);
-    this.formGroup.get('quantity')?.setValue(this.rowToUpdate.quantity);
-    this.formGroup.get('notes')?.setValue(this.rowToUpdate.notes);
+    this.tableFormGroup.get('category')?.setValue(this.rowToUpdate.categoryObj);
+    this.tableFormGroup.get('quantity')?.setValue(this.rowToUpdate.quantity);
+    this.tableFormGroup.get('notes')?.setValue(this.rowToUpdate.notes);
     this.lists.splice(index,1);
   }
-
+  token: any;
   ngOnInit(): void {
+    this.token = this.store.getStoreElement('SSAB-t');
+  }
+  
+  addIncoming() {
+    if(this.lists.length > 0 && this.formGroup.get('incomingCompany')?.value && this.formGroup.get('codeGeneration')?.value) {
+      this.formGroup.get('storeId')?.setValue(this.storeId);
+      this.formGroup.get('listOfBillCategory')?.setValue(this.lists);
+      this.formGroup.get('billType')?.setValue(1);
+      console.log(this.formGroup.value);
+      this.integration.addIncomingBill(this.formGroup.value, this.token).subscribe(status => {
+        console.log(status);
+        this.custom.notificationStatus_success_OR_info_OR_error('تم اضافة البيانات بنجاح' , 'أهلا' , 'success');
+        this.resetAllFields();
+        this.lists = [];
+        this.modalService.dismissAll();
+      });
+    } else {
+      this.custom.notificationStatus_success_OR_info_OR_error( 'يجب اداخل جميع الحقول المطلوبة','أهلا', 'info');
+    }
+  }
+
+  resetAllFields() {
+    this.resettableinputs();
+    this.custom.resetComponentElement(this.formGroup);
   }
 
 }

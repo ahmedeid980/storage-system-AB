@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -31,11 +32,17 @@ public class BillProduct {
 	@Column(name = "quantity")
 	private int quantity;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {
+			CascadeType.MERGE,
+			CascadeType.REFRESH
+	})
 	@JoinColumn(name = "category_id")
 	private Category category;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {
+			CascadeType.MERGE,
+			CascadeType.REFRESH
+	})
 	@JoinColumn(name = "bill_id")
 	private Bill bill;
 

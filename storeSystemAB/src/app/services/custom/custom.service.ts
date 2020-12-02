@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
+import  Swal  from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +40,10 @@ export class CustomService {
       return true;
     }
     return false;
+  }
+
+  notificationStatus_success_OR_info_OR_error(message: string, header: string, _type: any) {
+    Swal.fire(header, message, _type);
   }
 
 

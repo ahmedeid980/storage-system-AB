@@ -47,4 +47,16 @@ export class IntegrationService {
     return this.http.get(this.URI+'/storageSystem/userlogin/getIncomingDataToUIBean/'+userId, requestOptions);
   }
 
+  addIncomingBill(bill: any, token: string) {
+    const headerDict = {
+      'Authorization': 'ahmbas '+token
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    // const a = [bill];
+    return this.http.post(this.URI+'/bill/addIncoming/',bill , requestOptions);
+  }
+
 }

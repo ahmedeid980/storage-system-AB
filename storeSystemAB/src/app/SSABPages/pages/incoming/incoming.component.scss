@@ -73,8 +73,9 @@ h2 small {
 }
 
 .responsive-table .table-header {
-  background-color: #95A5A6;
+  background-color: #83c1c5;
   font-size: 14px;
+  font-weight: bolder;
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
@@ -141,15 +142,15 @@ h2 small {
 .table-row {
   -webkit-transition: all ease-out .5s;
   transition: all ease-out .5s;
+  border-radius: 20px !important;
+  &:hover {
+    background-color: #e9e9e9 !important;
+    color: #3a2626;
+    font-weight: bolder;
+    box-shadow: 15px 5px 5px rgb(218, 218, 218);
+  }
 }
 
-.table-row:hover {
-  background-color: #d8d8d8 !important;
-  color: #e62a2a;
-  font-weight: bolder;
-  // -webkit-transform: scale(1.02);
-  //         transform: scale(1.002);
-}
 .close {
   margin: 0;
 }
@@ -176,6 +177,7 @@ h2 small {
   .btn-warning {
     margin-right: 15px;
   }
+  margin-bottom: 15px;
 }
 label {
   color: rgb(49, 49, 49);
@@ -192,4 +194,10 @@ input.ng-dirty, select.ng-dirty {
 }
 p {
   margin-right: 10px;
+  color: #a32d2d;
+  font-weight: bolder;
+}
+.table-rows {
+  max-height: 300px;
+  overflow: auto;
 }

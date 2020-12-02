@@ -4,57 +4,68 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ahmedeid.securityandjwt.demo.entities.BillProduct;
+import com.google.gson.annotations.SerializedName;
 
 public class IncomingBean {
-	
-	private String codecodeGeneration;
-	private Integer billType;
-	private Integer incomingCompany ;
-	private Integer storeId ;
-	private List<BillProductUIBean> listOfBillCategory=new ArrayList<BillProductUIBean>();
-	
-	
-	
-	
-	
+
+	private String codeGeneration;
+	private int billType;
+	private int incomingCompany;
+	private int storeId;
+
+	@SerializedName("listOfBillCategory")
+	private List<ListOfBillCategory> listOfBillCategory = new ArrayList<ListOfBillCategory>();
+
 	public IncomingBean() {
-	
+
 		// TODO Auto-generated constructor stub
 	}
-	public String getCodecodeGeneration() {
-		return codecodeGeneration;
+
+	public String getCodeGeneration() {
+		return codeGeneration;
 	}
-	public void setCodecodeGeneration(String codecodeGeneration) {
-		this.codecodeGeneration = codecodeGeneration;
+
+	public void setCodeGeneration(String codeGeneration) {
+		this.codeGeneration = codeGeneration;
 	}
-	public Integer getBillType() {
+
+	public int getBillType() {
 		return billType;
 	}
-	public void setBillType(Integer billType) {
+
+	public void setBillType(int billType) {
 		this.billType = billType;
 	}
-	public Integer getIncomingCompany() {
+
+	public int getIncomingCompany() {
 		return incomingCompany;
 	}
-	public void setIncomingCompany(Integer incomingCompany) {
+
+	public void setIncomingCompany(int incomingCompany) {
 		this.incomingCompany = incomingCompany;
 	}
-	public Integer getStoreId() {
+
+	public int getStoreId() {
 		return storeId;
 	}
-	public void setStoreId(Integer storeId) {
+
+	public void setStoreId(int storeId) {
 		this.storeId = storeId;
 	}
-	public List<BillProductUIBean> getListOfBillCategory() {
+
+	public List<ListOfBillCategory> getListOfBillCategory() {
 		return listOfBillCategory;
 	}
-	public void setListOfBillCategory(List<BillProductUIBean> listOfBillCategory) {
+
+	public void setListOfBillCategory(List<ListOfBillCategory> listOfBillCategory) {
 		this.listOfBillCategory = listOfBillCategory;
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "IncomingBean [codeGeneration=" + codeGeneration + ", billType=" + billType + ", incomingCompany="
+				+ incomingCompany + ", storeId=" + storeId + ", listOfBillCategory=" + listOfBillCategory + "]";
+	}
+
 
 }

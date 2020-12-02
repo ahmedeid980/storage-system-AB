@@ -58,7 +58,7 @@
             <p class="incomeDate" id="incomeDate" required>{{date | date:'dd/MM/yyyy'}}</p>
           </div>
           <div class="col-md-4 mb-3">
-            <label for="incomingCompany">جهة التوريد :</label>
+            <label for="incomingCompany">جهة التوريد : ( <span style="color: crimson;">*</span> )</label>
             <select class="custom-select" formControlName='incomingCompany' id="validationDefault05" required>
               <option selected disabled value="">اختر...</option>
               <option *ngFor='let incomingCompany of income.incomingCompanise' 
@@ -71,10 +71,14 @@
           </div>
           
         </div>
-        
+        <div class="line">
+          <hr>
+        </div>
+      </form>
+      <form [formGroup]='tableFormGroup'>
           <div class="form-row">
             <div class="col-md-4 mb-3">
-              <label for="validationDefault07">البيان :</label>
+              <label for="validationDefault07">البيان : ( <span style="color: crimson;">*</span> )</label>
               <select class="custom-select" [(ngModel)]='selectedName' (change)="selectOption()"
                formControlName='category' id="validationDefault07"  required>
                 <option selected disabled value="">اختر...</option>
@@ -84,7 +88,7 @@
             </div>
             
             <div class="col-md-4 mb-3">
-              <label for="validationDefault03">الكمية :</label>
+              <label for="validationDefault03">الكمية : ( <span style="color: crimson;">*</span> )</label>
               <input type="text" class="form-control" formControlName='quantity' id="quntityId" required>
             </div>
               <div class="col-md-4 mb-3">
@@ -97,9 +101,9 @@
         
         <div class="button-income">
           <button class="btn btn-primary" type="submit" (click)='addCategories()'>اضف البيان</button>
-        <button class="btn btn-warning">تفريغ الحقول</button>
+          <button class="btn btn-warning" (click)='resetAllFields()'>تفريغ الحقول</button>
         </div>
-      </form>
+        <div class="table-rows">
       <div class="table">
         <table class="table table-hover">
           <thead class="thead-dark">
@@ -113,27 +117,33 @@
               <th scope="col">حذف</th>
             </tr>
           </thead>
+          
           <tbody>
 
-            <tr *ngFor='let list of lists; let i = index'>
-              <th scope="row">{{i+1}}</th>
-              <td>{{list.category}}</td>
-              <td>{{list.unit}}</td>
-              <td>{{list.quantity}}</td>
-              <td>{{list.notes}}</td>
-              <td style="direction: ltr;">
-                <a class="btn btn-light" style="width: 60px;" (click)='getTDToUpdate(i)'>تعديل</a>
-              </td>
-              <td style="direction: ltr;">
-                <a class="btn btn-warning" style="width: 70px;" (click)='removeDTRow(i)'>حذف</a>
-              </td>
-            </tr>
+            
+              <tr *ngFor='let list of lists; let i = index'>
+                <th scope="row">{{i+1}}</th>
+                <td>{{list.category}}</td>
+                <td>{{list.unit}}</td>
+                <td>{{list.quantity}}</td>
+                <td>{{list.notes}}</td>
+                <td style="direction: ltr;">
+                  <a class="btn btn-light" style="width: 60px;" (click)='getTDToUpdate(i)'>تعديل</a>
+                </td>
+                <td style="direction: ltr;">
+                  <a class="btn btn-warning" style="width: 70px;" (click)='removeDTRow(i)'>حذف</a>
+                </td>
+              </tr>
+            
             
           </tbody>
+        
         </table>
       </div>
+      </div>
+    </form>
     </div>
-    <button class="btn btn-info">استلام المهمات</button>
+    <button class="btn btn-info" (click)='addIncoming()'>استلام المهمات</button>
   </div>
   
 

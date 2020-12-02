@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -30,26 +31,41 @@ public class Bill {
 	@Column(name = "code_generation")
 	private String codeGeneration;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {
+			CascadeType.MERGE,
+			CascadeType.REFRESH
+	}, fetch = FetchType.EAGER)
 	@JoinColumn(name = "store_id")
 	private Store store;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {
+			CascadeType.MERGE,
+			CascadeType.REFRESH
+	}, fetch = FetchType.EAGER)
 	@JoinColumn(name = "project_id")
 	private Project project;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {
+			CascadeType.MERGE,
+			CascadeType.REFRESH
+	})
 	@JoinColumn(name = "incoming_company_id")
 	private IncomingCompany incomingCompany;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {
+			CascadeType.MERGE,
+			CascadeType.REFRESH
+	},fetch = FetchType.EAGER)
 	@JoinColumn(name = "bill_type_id")
 	private BillType billType;
 
 	@Column(name = "created_date")
 	private Date createdDate;
 	
-	@OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "bill", fetch = FetchType.EAGER,cascade = {
+			CascadeType.MERGE,
+			CascadeType.REFRESH
+	})
 	private List<BillProduct> billProducts;
 
 	public Bill() {

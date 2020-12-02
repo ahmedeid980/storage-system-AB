@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ahmedeid.securityandjwt.demo.entities.Bill;
 import com.ahmedeid.securityandjwt.demo.services.BillService;
 import com.ahmedeid.securityandjwt.demo.uibean.IncomingBean;
+import com.ahmedeid.securityandjwt.demo.wrapper.WrapperManager;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @CrossOrigin
 @RestController
@@ -42,10 +45,36 @@ public class BillController {
 	}
 	
 	@PostMapping("/addIncoming")
-	public void addIncomingBill(@RequestBody IncomingBean incomingBean)
+	public Bill addIncomingBill(@RequestBody String incomingBean)
 	{
-		System.out.println(incomingBean.toString());
-		//return billService.saveOrUpdateBill(bill);
+		
+		Gson gson = null;
+		IncomingBean incoming_bean = new IncomingBean();
+		Bill bill = null;
+		Bill bills = null;
+		
+		try {
+			
+			GsonBuilder gsonBuilder = new GsonBuilder();
+			gson = gsonBuilder.create();
+			incoming_bean = gson.fromJson(incomingBean, IncomingBean.class);
+			
+			
+			WrapperManager wrapperManager = new WrapperManager();
+			bill = wrapperManager.wrapperUIToDB(incoming_bean);
+			
+			System.out.println("bill : ");
+			System.out.println(bill.toString());
+			
+			bills = billService.saveOrUpdateBill(bill);
+			
+			System.out.println("bills : ");
+			System.out.println(bills.toString());
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return bills;
 	}
 	
 	

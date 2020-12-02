@@ -48,6 +48,7 @@ public class BillController {
 	public Bill addIncomingBill(@RequestBody String incomingBean)
 	{
 		
+		System.out.println(incomingBean.toString() );
 		Gson gson = null;
 		IncomingBean incoming_bean = new IncomingBean();
 		Bill bill = null;

@@ -23,9 +23,6 @@ public class BillProduct {
 	@Column(name = "id")
 	private int id;
 
-	@Column(name = "item")
-	private String item;
-
 	@Column(name = "notes")
 	private String notes;
 
@@ -36,14 +33,14 @@ public class BillProduct {
 			CascadeType.MERGE,
 			CascadeType.REFRESH
 	})
-	@JoinColumn(name = "category_id")
+	@JoinColumn(name = "category_id", referencedColumnName = "id")
 	private Category category;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = {
 			CascadeType.MERGE,
 			CascadeType.REFRESH
 	})
-	@JoinColumn(name = "bill_id")
+	@JoinColumn(name = "bill_id", referencedColumnName = "id")
 	private Bill bill;
 
 	public BillProduct() {
@@ -52,7 +49,6 @@ public class BillProduct {
 
 	public BillProduct(String item, String notes, int quantity, Category category, Bill bill) {
 		super();
-		this.item = item;
 		this.notes = notes;
 		this.quantity = quantity;
 		this.category = category;
@@ -65,14 +61,6 @@ public class BillProduct {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getItem() {
-		return item;
-	}
-
-	public void setItem(String item) {
-		this.item = item;
 	}
 
 	public String getNotes() {
@@ -109,7 +97,7 @@ public class BillProduct {
 
 	@Override
 	public String toString() {
-		return "BillProduct [id=" + id + ", item=" + item + ", notes=" + notes + ", quantity=" + quantity
+		return "BillProduct [id=" + id  + ", notes=" + notes + ", quantity=" + quantity
 				+ ", category=" + category + ", bill=" + bill + "]";
 	}
 

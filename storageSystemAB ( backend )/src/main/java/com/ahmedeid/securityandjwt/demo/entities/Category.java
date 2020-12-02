@@ -34,7 +34,7 @@ public class Category {
 	private StoreType storeType;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "unit_id")
+	@JoinColumn(name = "unit_id", referencedColumnName = "id")
 	private Unit unit;
 
 	public Category() {

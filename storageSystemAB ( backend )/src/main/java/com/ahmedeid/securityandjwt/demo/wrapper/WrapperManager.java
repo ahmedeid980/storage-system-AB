@@ -50,10 +50,8 @@ public class WrapperManager {
 		List<BillProduct> billProducts = new ArrayList<BillProduct>();
 		if(!incoming_bean.getListOfBillCategory().isEmpty() && incoming_bean.getListOfBillCategory() != null) {
 			System.out.println("incoming_bean.getListOfBillCategory() : "+incoming_bean.getListOfBillCategory().toString());
-			int counter = 1;
 			for(ListOfBillCategory listOfBillCategory: incoming_bean.getListOfBillCategory()) {
 				BillProduct billProduct = new BillProduct();
-				billProduct.setId(counter);
 				Category category = new Category();
 				category.setId(listOfBillCategory.getCategoryObj().getId());
 				billProduct.setCategory(category);
@@ -65,7 +63,6 @@ public class WrapperManager {
 					billProduct.setQuantity(Integer.valueOf(listOfBillCategory.getQuantity()));
 				
 				billProducts.add(billProduct);
-				counter++;
 			}
 			System.out.println("here added .. ");
 			bill.setBillProducts(billProducts);

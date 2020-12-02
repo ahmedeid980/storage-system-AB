@@ -35,28 +35,28 @@ public class Bill {
 			CascadeType.MERGE,
 			CascadeType.REFRESH
 	}, fetch = FetchType.EAGER)
-	@JoinColumn(name = "store_id")
+	@JoinColumn(name = "store_id", referencedColumnName = "id")
 	private Store store;
 
 	@ManyToOne(cascade = {
 			CascadeType.MERGE,
 			CascadeType.REFRESH
 	}, fetch = FetchType.EAGER)
-	@JoinColumn(name = "project_id")
+	@JoinColumn(name = "project_id", referencedColumnName = "id")
 	private Project project;
 
 	@ManyToOne(cascade = {
 			CascadeType.MERGE,
 			CascadeType.REFRESH
 	})
-	@JoinColumn(name = "incoming_company_id")
+	@JoinColumn(name = "incoming_company_id", referencedColumnName = "id")
 	private IncomingCompany incomingCompany;
 
 	@ManyToOne(cascade = {
 			CascadeType.MERGE,
 			CascadeType.REFRESH
 	},fetch = FetchType.EAGER)
-	@JoinColumn(name = "bill_type_id")
+	@JoinColumn(name = "bill_type_id", referencedColumnName = "id")
 	private BillType billType;
 
 	@Column(name = "created_date")

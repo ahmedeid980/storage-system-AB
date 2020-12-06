@@ -135,9 +135,14 @@ export class IncomingComponent implements OnInit {
     });
   }
 
+  billProductList: any;
   getIncomToDetails(index: number) {
     this.rowToUpdate = this.bill[index];
-    console.log(this.rowToUpdate);
+    this.integration.getBillProductByBillId(this.token, this.rowToUpdate.id).subscribe(billProducts => {
+      if(billProducts) {
+        this.billProductList = billProducts;
+      }
+    });
   }
   
   addIncoming() {
@@ -164,6 +169,21 @@ export class IncomingComponent implements OnInit {
   resetAllFields() {
     this.resettableinputs();
     this.custom.resetComponentElement(this.formGroup);
+  }
+
+  openDetails(incomingDetails: any, index: number) {
+    this.modalService.open(incomingDetails, { size: 'xl' });
+    this.getIncomToDetails(index);
+  }
+
+  private getDismissReasonDetails(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
 }

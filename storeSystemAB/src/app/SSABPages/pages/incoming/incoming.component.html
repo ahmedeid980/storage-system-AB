@@ -2,6 +2,14 @@
 <div class="income">
   <div class="container-fluid" style="text-align: center;">
     <!-- <h2>Responsive Tables Using LI <small>Triggers on 767px</small></h2> -->
+    <div class="title flex-help">
+      <h1 class="incomTitle">إذن استلام مهمات المخزن</h1>
+      <a class='title-in' placement="right"
+      ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." popoverTitle="Popover on right"><i class="fa fa-question-circle"></i></a>
+    </div>
+    <div class="line">
+      <hr>
+    </div>
     <div class="create-income">
       <button class="btn btn-info" (click)="open(incoming)" 
       placement="bottom" ngbTooltip="يمكنك بالنقر عليه ان تنشأ اذن استلام للوردات"
@@ -22,7 +30,7 @@
           <div class="col col-4">تاريخ الوارد</div>
         </li>
         <div class="lists">
-        <li class="table-row" *ngFor='let billIncome of bill; let i = index' (click)='getIncomToDetails(i)'>
+        <li class="table-row" *ngFor='let billIncome of bill; let i = index' (click)='openDetails(incomingDetails, i)'>
           <div class="col col-1" data-label="Job Id">{{billIncome.codeGeneration}}</div>
           <div class="col col-2" data-label="Customer Name">{{billIncome.store.decription}}</div>
           <div class="col col-3" data-label="Amount">{{billIncome.store.user.userName}}</div>
@@ -148,6 +156,84 @@
     </form>
     </div>
     <button class="btn btn-info" (click)='addIncoming()'>استلام المهمات</button>
+  </div>
+  
+
+</ng-template>
+
+
+<!--  for incoming details  -->
+<ng-template #incomingDetails let-modal>
+  <div class="content-in" style="direction: rtl !important;">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">تفاصيل إذن استلام مهمات</h4>
+      <button type="button" class="close" aria-label="Close" style="outline: none;" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-row header">
+          <div class="col-md-3 mb-3 flex-form">
+            <label for="validationDefault04">مخزن :</label>
+            <p class="storeIdD" id="storeIdD">{{rowToUpdate.store.decription}}</p>
+          </div>
+          <div class="col-md-3 mb-3 flex-form">
+            <label for="generationCode">رقم الأذن :</label>
+            <p class="codeGenerationD" id="codeGenerationD">{{rowToUpdate.codeGeneration}}</p>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-4 mb-3 flex-form">
+            <label for="validationDefault03">تاريخ الاستلام :</label>
+            <p class="incomeDateD" id="incomeDateD">{{rowToUpdate.createdDate | date:'dd/MM/yyyy'}}</p>
+          </div>
+          <div class="col-md-4 mb-3 flex-form">
+            <label for="validationDefault03">جهة التوريد :</label>
+            <p class="incomCompanyD" id="incomCompanyD">{{rowToUpdate.incomingCompany.decription}} </p>
+          </div>
+          <div class="col-md-4 mb-3 flex-form">
+            <label for="validationDefault06">استلمت أنا :</label>
+            <p class="userId" id="userId" required> {{rowToUpdate.store.user.userName}}</p>
+          </div>
+          
+        </div>
+        <div class="line">
+          <hr>
+        </div>
+         
+        <div class="table-rows">
+      <div class="table">
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">م</th>
+              <th scope="col">البيان</th>
+              <th scope="col">الوحدة</th>
+              <th scope="col">الكمية</th>
+              <th scope="col">الملاحظات</th>
+              
+            </tr>
+          </thead>
+          
+          <tbody>
+
+            
+              <tr *ngFor='let list of billProductList; let i = index'>
+                <th scope="row">{{i+1}}</th>
+                <td>{{list.category.decription}}</td>
+                <td>{{list.category.unit.decription}}</td>
+                <td>{{list.quantity}}</td>
+                <td>{{list.notes}}</td>
+                
+              </tr>
+            
+            
+          </tbody>
+        
+        </table>
+      </div>
+      </div>
+    </div>
   </div>
   
 

@@ -204,3 +204,15 @@ p {
 .table-row {
   cursor: pointer;
 }
+
+.flex-help {
+  display: flex;
+  justify-content: space-between;
+}
+.title-in {
+  margin-left: 30px;
+  cursor: pointer;
+  i {
+    font-size: 35px;
+  }
+}

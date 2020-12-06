@@ -70,4 +70,15 @@ export class IntegrationService {
     return this.http.get(this.URI+'/bill/', requestOptions);
   }
 
+  getBillProductByBillId(token: string, billId: number) {
+    const headerDict = {
+      'Authorization': 'ahmbas '+token
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    return this.http.get(this.URI+'/bill/getBillProductByBillId/'+billId+'/', requestOptions);
+  }
+
 }

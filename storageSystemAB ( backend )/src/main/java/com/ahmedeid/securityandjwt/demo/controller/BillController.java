@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ahmedeid.securityandjwt.demo.entities.Bill;
 import com.ahmedeid.securityandjwt.demo.entities.BillProduct;
+import com.ahmedeid.securityandjwt.demo.repository.SqlStatement;
 import com.ahmedeid.securityandjwt.demo.services.BillProductService;
 import com.ahmedeid.securityandjwt.demo.services.BillService;
 import com.ahmedeid.securityandjwt.demo.services.IncomingCompanyService;
@@ -35,6 +36,9 @@ public class BillController {
 
 	@Autowired
 	private IncomingCompanyService incomingCompanyService;
+	
+	@Autowired
+	private SqlStatement sqlStatement;
 
 	@GetMapping("/")
 	public List<Bill> getAll() {
@@ -85,6 +89,15 @@ public class BillController {
 			return null;
 		}
 		return bills;
+	}
+	
+	@GetMapping("/getBillProductByBillId/{billId}")
+	public List<BillProduct> getBillProductByBillId(@PathVariable("billId") int billId) {
+		
+		List<BillProduct> billProducts = this.sqlStatement.getBillProductByBillId(billId);
+		
+		return billProducts;
+		
 	}
 
 }

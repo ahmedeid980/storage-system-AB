@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ahmedeid.securityandjwt.demo.entities.Category;
 import com.ahmedeid.securityandjwt.demo.entities.IncomingCompany;
+import com.ahmedeid.securityandjwt.demo.entities.Project;
 import com.ahmedeid.securityandjwt.demo.entities.Store;
 import com.ahmedeid.securityandjwt.demo.entities.User;
 import com.ahmedeid.securityandjwt.demo.repository.SqlStatement;
@@ -99,6 +100,22 @@ public class AuthController {
 		incomingToUIBean.setStores(stores);
 		incomingToUIBean.setCategories(categories);
 		incomingToUIBean.setIncomingCompanise(incomingCompanies);
+		
+		return incomingToUIBean;
+		
+	}
+	
+	@GetMapping("/getOutBoundDataToUIBean/{userId}")
+	public IncomingToUIBean getOutBoundDataToUIBean(@PathVariable("userId") int userId) {
+		
+		Store stores = sql.getStoreByUserId(userId);
+		Project project = sql.getProjectByStoreId(stores.getId());
+		List<Category> categories = categoryService.getAll();
+		
+		IncomingToUIBean incomingToUIBean = new IncomingToUIBean();
+		incomingToUIBean.setStores(stores);
+		incomingToUIBean.setCategories(categories);
+		incomingToUIBean.setProject(project);
 		
 		return incomingToUIBean;
 		

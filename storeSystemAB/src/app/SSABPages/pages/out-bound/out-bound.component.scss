@@ -1,4 +1,4 @@
-.income {
+.outbound {
     margin-top: 20px;
     direction: rtl;
     text-align: right;
@@ -23,7 +23,7 @@ label {
     max-width: 800px;
   }
   
-.search-income {
+.search-outbound {
     margin-bottom: 20px;
 }
 
@@ -171,7 +171,7 @@ h2 small {
   margin-right: 15px;
 }
 
-.button-income {
+.button-outbound {
   display: flex;
   margin: 0;
   .btn-warning {

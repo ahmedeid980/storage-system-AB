@@ -29,4 +29,9 @@ export class IncomingData {
         }
     ]
   category: any;
+  'project': {
+      id: number;
+	decription: string;
+	address: string;
+  }
 }

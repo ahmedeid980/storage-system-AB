@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ahmedeid.securityandjwt.demo.entities.Category;
 import com.ahmedeid.securityandjwt.demo.entities.IncomingCompany;
+import com.ahmedeid.securityandjwt.demo.entities.Project;
 import com.ahmedeid.securityandjwt.demo.entities.Store;
 
 public class IncomingToUIBean {
@@ -12,6 +13,7 @@ public class IncomingToUIBean {
 	private List<IncomingCompany> incomingCompanise;
 	private List<Category> categories;
 	private String codeGeneration;
+	private Project project;
 
 	public IncomingToUIBean() {
 		super();
@@ -47,6 +49,14 @@ public class IncomingToUIBean {
 
 	public void setCodeGeneration(String codeGeneration) {
 		this.codeGeneration = codeGeneration;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 }

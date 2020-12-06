@@ -5,6 +5,7 @@ import { IncomingGuardGuard } from './SSABGuard/incoming-guard.guard';
 import { LayoutSSABComponent } from './SSABLayout/layout-s-s-a-b/layout-s-s-a-b.component';
 import { LoginLayoutComponent } from './SSABLayout/login-layout/login-layout.component';
 import { IncomingComponent } from './SSABPages/pages/incoming/incoming.component';
+import { OutBoundComponent } from './SSABPages/pages/out-bound/out-bound.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
@@ -26,6 +27,10 @@ const routes: Routes = [
         path: 'incoming',
         component: IncomingComponent,
         canActivate: [IncomingGuardGuard]
+      },
+      {
+        path: 'outbound',
+        component: OutBoundComponent
       }
     ]
   },

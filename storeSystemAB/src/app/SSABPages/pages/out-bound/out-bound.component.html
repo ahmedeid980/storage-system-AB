@@ -1,0 +1,237 @@
+
+<div class="outbound">
+    <div class="container-fluid" style="text-align: center;">
+      <!-- <h2>Responsive Tables Using LI <small>Triggers on 767px</small></h2> -->
+      <div class="title flex-help">
+        <h1 class="out-Title">إذن صرف مهمات لمشروع</h1>
+        <a class='title-in' placement="right"
+        ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." popoverTitle="Popover on right"><i class="fa fa-question-circle"></i></a>
+      </div>
+      <div class="line">
+        <hr>
+      </div>
+      <div class="create-income">
+        <button class="btn btn-info" (click)="open(incoming)" 
+        placement="bottom" ngbTooltip="يمكنك بالنقر عليه ان تقوم بصرف مهمات لمشروع ما"
+        >  صرف مهمات جديدة</button>
+    </div>
+    <div class="search-outbound">
+        <label for="search"> بحث : </label>
+        <input type="search" name="search" class="input form-control" id="search">
+    </div>
+      <div class="content">
+        <ul class="responsive-table" >
+         
+          <li class="table-header" style="font-weight: bolder;">
+            <div class="col col-1">الكود</div>
+            <div class="col col-2">المخزن</div>
+            <div class="col col-3">امين المخزن</div>
+            <div class="col col-4">الشركة الموردة</div>
+            <div class="col col-4">تاريخ الوارد</div>
+          </li>
+          <div class="lists">
+          <li class="table-row" *ngFor='let billIncome of bill; let i = index' (click)='openDetails(incomingDetails, i)'>
+            <div class="col col-1" data-label="Job Id">{{billIncome.codeGeneration}}</div>
+            <div class="col col-2" data-label="Customer Name">{{billIncome.store.decription}}</div>
+            <div class="col col-3" data-label="Amount">{{billIncome.store.user.userName}}</div>
+            <div class="col col-4" data-label="Payment Status">{{billIncome.incomingCompany.decription}}</div>
+            <div class="col col-4" data-label="Payment Status">{{billIncome.createdDate | date:'dd/MM/yyyy , hh:mm a'}}</div>
+          </li>
+          
+         </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #incoming let-modal>
+    <div class="content-in" style="direction: rtl !important;">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">إذن صرف مهمات لمشروع</h4>
+        <button type="button" class="close" aria-label="Close" style="outline: none;" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="outbound-form" [formGroup]='formGroup'>
+          <div class="form-row header">
+            <div class="col-md-3 mb-3 flex-form">
+              <label for="validationDefault04">مخزن :</label>
+              <p class="storeId" id="storeId" required>{{outbound.stores.decription}}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="generationCode">رقم الأذن :</label>
+              <input type="text" class="form-control" formControlName='codeGeneration' id="generationCode" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-4 mb-3 flex-form">
+              <label for="validationDefault03">تاريخ صرف المهمات :</label>
+              <p class="incomeDate" id="incomeDate" required>{{date | date:'dd/MM/yyyy'}}</p>
+            </div>
+            <div class="col-md-4 mb-3 flex-form">
+                <label for="validationDefault06"> إذن صرف مهمات لمشروع :</label>
+                <p class="userId" id="userId" required>{{outbound.project.decription}}</p>
+              </div>
+            <div class="col-md-4 mb-3 flex-form">
+              <label for="validationDefault06"> أمين المخزن :</label>
+              <p class="userId" id="userId" required>{{user.user.userName}}</p>
+            </div>
+            
+          </div>
+          <div class="line">
+            <hr>
+          </div>
+        </form>
+        <form [formGroup]='tableFormGroup'>
+            <div class="form-row">
+              <div class="col-md-4 mb-3">
+                <label for="validationDefault07">البيان : ( <span style="color: crimson;">*</span> )</label>
+                <select class="custom-select" [(ngModel)]='selectedName' (change)="selectOption()"
+                 formControlName='category' id="validationDefault07"  required>
+                  <option selected disabled value="">اختر...</option>
+                  <option *ngFor='let outboundCategory of outbound.categories' 
+                  [ngValue]='outboundCategory'>{{outboundCategory.decription}}</option>
+                </select>
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label for="validationDefault03">الكمية : ( <span style="color: crimson;">*</span> )</label>
+                <input type="text" class="form-control" formControlName='quantity' id="quntityId" required>
+              </div>
+                <div class="col-md-4 mb-3">
+                  <label for="validationDefault03">ملاحظات :</label>
+                  <textarea type="text" class="form-control" formControlName='notes' id="notesId"></textarea>
+                
+              </div>
+          </div>
+    
+          
+          <div class="button-outbound">
+            <button class="btn btn-primary" type="submit" (click)='addCategories()'>اضف البيان</button>
+            <button class="btn btn-warning" (click)='resetAllFields()'>تفريغ الحقول</button>
+          </div>
+          <div class="table-rows">
+        <div class="table">
+          <table class="table table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">م</th>
+                <th scope="col">البيان</th>
+                <th scope="col">الوحدة</th>
+                <th scope="col">الكمية</th>
+                <th scope="col">الملاحظات</th>
+                <th scope="col">تعديل</th>
+                <th scope="col">حذف</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+  
+              
+                <tr *ngFor='let list of lists; let i = index'>
+                  <th scope="row">{{i+1}}</th>
+                  <td>{{list.category}}</td>
+                  <td>{{list.unit}}</td>
+                  <td>{{list.quantity}}</td>
+                  <td>{{list.notes}}</td>
+                  <td style="direction: ltr;">
+                    <a class="btn btn-light" style="width: 60px;" (click)='getTDToUpdate(i)'>تعديل</a>
+                  </td>
+                  <td style="direction: ltr;">
+                    <a class="btn btn-warning" style="width: 70px;" (click)='removeDTRow(i)'>حذف</a>
+                  </td>
+                </tr>
+              
+              
+            </tbody>
+          
+          </table>
+        </div>
+        </div>
+      </form>
+      </div>
+      <button class="btn btn-info" (click)='addIncoming()'>صرف مهمات </button>
+    </div>
+    
+  
+  </ng-template>
+  
+  
+  <!--  for incoming details  -->
+  <ng-template #incomingDetails let-modal>
+    <div class="content-in" style="direction: rtl !important;">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">تفاصيل إذن استلام مهمات</h4>
+        <button type="button" class="close" aria-label="Close" style="outline: none;" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-row header">
+            <div class="col-md-3 mb-3 flex-form">
+              <label for="validationDefault04">مخزن :</label>
+              <p class="storeIdD" id="storeIdD">{{rowToUpdate.store.decription}}</p>
+            </div>
+            <div class="col-md-3 mb-3 flex-form">
+              <label for="generationCode">رقم الأذن :</label>
+              <p class="codeGenerationD" id="codeGenerationD">{{rowToUpdate.codeGeneration}}</p>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-4 mb-3 flex-form">
+              <label for="validationDefault03">تاريخ الاستلام :</label>
+              <p class="incomeDateD" id="incomeDateD">{{rowToUpdate.createdDate | date:'dd/MM/yyyy'}}</p>
+            </div>
+            <div class="col-md-4 mb-3 flex-form">
+              <label for="validationDefault03">جهة التوريد :</label>
+              <p class="incomCompanyD" id="incomCompanyD">{{rowToUpdate.incomingCompany.decription}} </p>
+            </div>
+            <div class="col-md-4 mb-3 flex-form">
+              <label for="validationDefault06">استلمت أنا :</label>
+              <p class="userId" id="userId" required> {{rowToUpdate.store.user.userName}}</p>
+            </div>
+            
+          </div>
+          <div class="line">
+            <hr>
+          </div>
+           
+          <div class="table-rows">
+        <div class="table">
+          <table class="table table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">م</th>
+                <th scope="col">البيان</th>
+                <th scope="col">الوحدة</th>
+                <th scope="col">الكمية</th>
+                <th scope="col">الملاحظات</th>
+                
+              </tr>
+            </thead>
+            
+            <tbody>
+  
+              
+                <tr *ngFor='let list of billProductList; let i = index'>
+                  <th scope="row">{{i+1}}</th>
+                  <td>{{list.category.decription}}</td>
+                  <td>{{list.category.unit.decription}}</td>
+                  <td>{{list.quantity}}</td>
+                  <td>{{list.notes}}</td>
+                  
+                </tr>
+              
+              
+            </tbody>
+          
+          </table>
+        </div>
+        </div>
+      </div>
+    </div>
+    
+  
+  </ng-template>
+  

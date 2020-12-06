@@ -20,11 +20,12 @@ import { IntegrationService } from './services/serviceIntegration/integration.se
 import { CustomService } from './services/custom/custom.service';
 import { LoginLayoutComponent } from './SSABLayout/login-layout/login-layout.component';
 import { ASEEncryptDecryptService } from './services/security/a-s-e-encrypt-decrypt.service';
+import { OutBoundComponent } from './SSABPages/pages/out-bound/out-bound.component';
 
 @NgModule({
   declarations: [
     AppComponent,LayoutSSABComponent,NavParComponent,FooterParComponent,
-    ContentComponent,SliderComponent,IncomingComponent, LoginComponent, LoginLayoutComponent
+    ContentComponent,SliderComponent,IncomingComponent, LoginComponent, LoginLayoutComponent, OutBoundComponent
   ],
   imports: [
     BrowserModule,

@@ -1,22 +1,22 @@
-import { formatDate } from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IncomingData } from 'src/app/classes/incoming-data';
+import { CustomService } from 'src/app/services/custom/custom.service';
 import { IntegrationService } from 'src/app/services/serviceIntegration/integration.service';
 import { StoreDataService } from 'src/app/services/storage/store-data.service';
-import { CustomService } from '../../../services/custom/custom.service';
+import { CategoryList } from '../incoming/incoming.component';
 
 @Component({
-  selector: 'app-incoming',
-  templateUrl: './incoming.component.html',
-  styleUrls: ['./incoming.component.scss']
+  selector: 'app-out-bound',
+  templateUrl: './out-bound.component.html',
+  styleUrls: ['./out-bound.component.scss']
 })
-export class IncomingComponent implements OnInit {
+export class OutBoundComponent implements OnInit {
 
+  
   formGroup = new FormGroup({
     'codeGeneration': new FormControl('',[Validators.required]),
-    'incomingCompany': new FormControl('',[Validators.required]),
     'storeId': new FormControl('',[Validators.required]),
     'billType': new FormControl('',[Validators.required]),
     'project': new FormControl('',[Validators.required]),
@@ -41,14 +41,14 @@ export class IncomingComponent implements OnInit {
       this.user = this.store.getStoreElement('SSAB-u');
     }
 
-    income: IncomingData = new IncomingData;
+    outbound: IncomingData = new IncomingData;
     date: Date | undefined;
     storeId: any;
-  getIncomingDataToUIBean() {
-    this.integration.getIncomingDataToUIBean(this.user.user.id, this.user.token).subscribe((IncomingData: any) => {
-      if(IncomingData) {
-        this.income = IncomingData;
-        this.storeId = IncomingData.stores.id;
+    getOutBoundDataToUIBean() {
+    this.integration.getOutBoundDataToUIBean(this.user.user.id, this.user.token).subscribe((outboundData: any) => {
+      if(outboundData) {
+        this.outbound = outboundData;
+        this.storeId = outboundData.stores.id;
         this.date = new Date();
       }
     }, error => {
@@ -60,7 +60,7 @@ export class IncomingComponent implements OnInit {
 
   open(incoming: any) {
     this.modalService.open(incoming, { size: 'xl' });
-    this.getIncomingDataToUIBean();
+    this.getOutBoundDataToUIBean();
   }
 
   private getDismissReason(reason: any): string {
@@ -181,25 +181,6 @@ export class IncomingComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
-  }
-
-}
-export class CategoryList {
-
-  public category?: string;
-  public quantity?: number;
-  public notes?: string;
-  public unit?: string;
-  public categoryObj: any;
-
-  constructor(category: string, quantity: number, notes: string, unit: string, categoryObj: any) {
-
-    this.category = category;
-    this.quantity = quantity;
-    this.notes = notes;
-    this.unit = unit;
-    this.categoryObj = categoryObj;
-
   }
 
 }

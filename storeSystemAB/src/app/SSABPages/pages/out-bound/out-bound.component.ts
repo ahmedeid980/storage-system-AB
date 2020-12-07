@@ -83,14 +83,29 @@ export class OutBoundComponent implements OnInit {
     this.unit = this.selectedName.unit.decription;
   }
   
+  findRow: any;
   addCategories() {
     if(this.tableFormGroup.get('quantity')?.value &&
     this.tableFormGroup.get('category')?.value) {
 
-      const newRow = new CategoryList(this.categoryName,this.tableFormGroup.get('quantity')?.value,
-      this.tableFormGroup.get('notes')?.value,this.unit, this.tableFormGroup.get('category')?.value);
-      this.lists.push(newRow);
-      this.resettableinputs();
+      this.findRow = this.lists.find(row => {
+        return (row.category === this.tableFormGroup.get('category')?.value.decription)
+      });
+      if(!this.findRow) {
+        this.integration.checkAvilability(this.tableFormGroup.get('category')?.value.id,
+        this.outbound.stores.id, this.tableFormGroup.get('quantity')?.value, this.token).subscribe((incomingToUIBean: any) => {
+          if(incomingToUIBean.status) {
+            const newRow = new CategoryList(this.categoryName,this.tableFormGroup.get('quantity')?.value,
+            this.tableFormGroup.get('notes')?.value,this.unit, this.tableFormGroup.get('category')?.value);
+            this.lists.push(newRow);
+            this.resettableinputs();
+          } else {
+            this.custom.notificationStatus_success_OR_info_OR_error( incomingToUIBean.quantity+'كمية البيان التى ادخلتها الان اكبر من الكمية داخل المخزن','تحزير '+ 'الكميه المتاحه فقط ', 'warning');
+          }
+        });
+      } else {
+        this.custom.notificationStatus_success_OR_info_OR_error( 'هذا الصنف تم اضافته من قبل', 'تحزير', 'warning');
+      }
     } else {
       this.custom.notificationStatus_success_OR_info_OR_error( 'يجب اداخل جميع الحقول المطلوبة','أهلا', 'info');
     }

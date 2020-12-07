@@ -92,4 +92,15 @@ export class IntegrationService {
     return this.http.get(this.URI+'/storageSystem/userlogin/getOutBoundDataToUIBean/'+userId, requestOptions);
   }
 
+  checkAvilability(categoryId: number, storeId: number,quantity: number, token: string) {
+    const headerDict = {
+      'Authorization': 'ahmbas '+token
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    return this.http.get(this.URI+'/category/checkAvilability/'+categoryId+'/'+storeId+'/'+quantity, requestOptions);
+  }
+
 }

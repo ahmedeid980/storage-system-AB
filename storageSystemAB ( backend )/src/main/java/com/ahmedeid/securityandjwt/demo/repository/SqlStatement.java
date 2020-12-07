@@ -55,5 +55,35 @@ public class SqlStatement {
 		return project;
 
 	}
+	
+	public Long getTotalIncomCategory(int storeId, int categoryId) {
+
+		Session session = entityManager.unwrap(Session.class);
+
+		Query userSQL = session.createQuery("SELECT sum(quantity) "
+				+ "from BillProduct where category.id= :categoryId and "
+				+ "bill.store.id= :storeId and bill.billType.id=1");
+		userSQL.setParameter("categoryId", categoryId);
+		userSQL.setParameter("storeId", storeId);
+		Long totalQuantity = (Long) userSQL.uniqueResult();
+
+		return totalQuantity;
+
+	}
+	
+	public Long getTotalOutBoundCategory(int storeId, int categoryId) {
+
+		Session session = entityManager.unwrap(Session.class);
+
+		Query userSQL = session.createQuery("SELECT sum(quantity) "
+				+ "from BillProduct where category.id= :categoryId and "
+				+ "bill.store.id= :storeId and bill.billType.id=2");
+		userSQL.setParameter("categoryId", categoryId);
+		userSQL.setParameter("storeId", storeId);
+		Long totalQuantity = (Long) userSQL.uniqueResult();
+
+		return totalQuantity;
+
+	}
 
 }

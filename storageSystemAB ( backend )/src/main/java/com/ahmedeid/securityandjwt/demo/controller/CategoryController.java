@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ahmedeid.securityandjwt.demo.entities.Category;
+import com.ahmedeid.securityandjwt.demo.repository.SqlStatement;
 import com.ahmedeid.securityandjwt.demo.services.CategoryService;
+import com.ahmedeid.securityandjwt.demo.uibean.IncomingToUIBean;
 
 @CrossOrigin
 @RestController
@@ -22,6 +24,9 @@ public class CategoryController {
 	
 	@Autowired
 	CategoryService categoryService;
+	
+	@Autowired
+	private SqlStatement sqlStatement;
 	
 	@GetMapping
 	public List<Category> getAll()
@@ -45,6 +50,29 @@ public class CategoryController {
 	public void delelteCategory(@PathVariable("categoryId") int categoryId)
 	{
 		categoryService.deleteCategory(categoryId);
+	}
+	
+	@GetMapping("/checkAvilability/{categoryId}/{storeId}/{quantity}")
+	public IncomingToUIBean checkAvilability(@PathVariable("categoryId") int categoryId,
+			@PathVariable("storeId") int storeId, @PathVariable("quantity") long quantity) {
+		
+		IncomingToUIBean incomingToUIBean=new IncomingToUIBean();
+		
+		Long totalIncoming = sqlStatement.getTotalIncomCategory(storeId, categoryId) == null ? 0 : sqlStatement.getTotalIncomCategory(storeId, categoryId);
+		Long totalOutbound = sqlStatement.getTotalOutBoundCategory(storeId, categoryId) == null ? 0 : sqlStatement.getTotalOutBoundCategory(storeId, categoryId);
+		
+		Long total = totalIncoming - totalOutbound;
+		
+		if(total >= quantity) {
+			incomingToUIBean.setStatus(true);
+		}else
+		{
+			incomingToUIBean.setStatus(false);
+			incomingToUIBean.setQuantity(total);
+		}
+		
+		return incomingToUIBean;
+		
 	}
 
 }

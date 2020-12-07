@@ -14,6 +14,8 @@ public class IncomingToUIBean {
 	private List<Category> categories;
 	private String codeGeneration;
 	private Project project;
+	private Long quantity;
+	private boolean status;
 
 	public IncomingToUIBean() {
 		super();
@@ -58,5 +60,24 @@ public class IncomingToUIBean {
 	public void setProject(Project project) {
 		this.project = project;
 	}
+
+	public Long getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Long quantity) {
+		this.quantity = quantity;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+
+	
 
 }

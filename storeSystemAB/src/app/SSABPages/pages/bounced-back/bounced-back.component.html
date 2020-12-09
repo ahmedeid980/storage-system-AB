@@ -1,21 +1,21 @@
 
-<div class="outbound">
+<div class="bounce">
     <div class="container-fluid" style="text-align: center;">
       <!-- <h2>Responsive Tables Using LI <small>Triggers on 767px</small></h2> -->
       <div class="title flex-help">
-        <h1 class="out-Title">إذن صرف مهمات لمشروع</h1>
+        <h1 class="bounceTitle">إذن ارتجاع مهمات لمخزن</h1>
         <a class='title-in' placement="right"
         ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." popoverTitle="Popover on right"><i class="fa fa-question-circle"></i></a>
       </div>
       <div class="line">
         <hr>
       </div>
-      <div class="create-income">
-        <button class="btn btn-info" (click)="open(incoming)" 
-        placement="bottom" ngbTooltip="يمكنك بالنقر عليه ان تقوم بصرف مهمات لمشروع ما"
-        >  صرف مهمات جديدة</button>
+      <div class="create-bounce">
+        <button class="btn btn-info" (click)="open(bounce)" 
+        placement="bottom" ngbTooltip="يمكنك بالنقر عليه ان تنشأ إذن ارتجاع مهمات لمخزن"
+        >ارتجاع المهمات</button>
     </div>
-    <div class="search-outbound">
+    <div class="search-bounce">
         <label for="search"> بحث : </label>
         <input type="search" name="search" class="input form-control" id="search">
     </div>
@@ -26,16 +26,16 @@
             <div class="col col-1">الكود</div>
             <div class="col col-2">المخزن</div>
             <div class="col col-3">امين المخزن</div>
-            <div class="col col-4">المشروع</div>
-            <div class="col col-4">تاريخ الوارد</div>
+            <div class="col col-4">الشركة الموردة</div>
+            <div class="col col-4">تاريخ المرتجع</div>
           </li>
           <div class="lists">
-          <li class="table-row" *ngFor='let billOutbound of bill; let i = index' (click)='openDetails(incomingDetails, i)'>
-            <div class="col col-1" data-label="Job Id">{{billOutbound.codeGeneration}}</div>
-            <div class="col col-2" data-label="Customer Name">{{billOutbound.store.decription}}</div>
-            <div class="col col-3" data-label="Amount">{{billOutbound.store.user.userName}}</div>
-            <div class="col col-4" data-label="Payment Status">{{billOutbound.project.decription}}</div>
-            <div class="col col-4" data-label="Payment Status">{{billOutbound.createdDate | date:'dd/MM/yyyy , hh:mm a'}}</div>
+          <li class="table-row" *ngFor='let billBounced of bill; let i = index' (click)='openDetails(bounceDetails, i)'>
+            <div class="col col-1" data-label="Job Id">{{billBounced.codeGeneration}}</div>
+            <div class="col col-2" data-label="Customer Name">{{billBounced.store.decription}}</div>
+            <div class="col col-3" data-label="Amount">{{billBounced.store.user.userName}}</div>
+            <div class="col col-3" data-label="Amount">{{billBounced.project.decription}}</div>
+            <div class="col col-4" data-label="Payment Status">{{billBounced.createdDate | date:'dd/MM/yyyy , hh:mm a'}}</div>
           </li>
           
          </div>
@@ -44,20 +44,20 @@
     </div>
   </div>
   
-  <ng-template #incoming let-modal>
+  <ng-template #bounce let-modal>
     <div class="content-in" style="direction: rtl !important;">
       <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">إذن صرف مهمات لمشروع</h4>
+        <h4 class="modal-title" id="modal-basic-title">إذن ارتجاع مهمات لمخزن</h4>
         <button type="button" class="close" aria-label="Close" style="outline: none;" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form id="outbound-form" [formGroup]='formGroup'>
+        <form id="bounce-form" [formGroup]='formGroup'>
           <div class="form-row header">
             <div class="col-md-3 mb-3 flex-form">
               <label for="validationDefault04">مخزن :</label>
-              <p class="storeId" id="storeId" required>{{outbound.stores?.decription}}</p>
+              <p class="storeId" id="storeId" required>{{bounced.stores?.decription}}</p>
             </div>
             <div class="col-md-3 mb-3">
               <label for="generationCode">رقم الأذن :</label>
@@ -66,15 +66,15 @@
           </div>
           <div class="form-row">
             <div class="col-md-4 mb-3 flex-form">
-              <label for="validationDefault03">تاريخ صرف المهمات :</label>
+              <label for="validationDefault03">تاريخ الاستلام :</label>
               <p class="incomeDate" id="incomeDate" required>{{date | date:'dd/MM/yyyy'}}</p>
             </div>
             <div class="col-md-4 mb-3 flex-form">
-                <label for="validationDefault06"> إذن صرف مهمات لمشروع :</label>
-                <p class="userId" id="userId" required>{{outbound.project?.decription}}</p>
-              </div>
+              <label for="validationDefault06">المشروع :</label>
+              <p class="userId" id="userId" required>{{bounced.project?.decription}}</p>
+            </div>
             <div class="col-md-4 mb-3 flex-form">
-              <label for="validationDefault06"> أمين المخزن :</label>
+              <label for="validationDefault06">استلمت أنا :</label>
               <p class="userId" id="userId" required>{{user.user.userName}}</p>
             </div>
             
@@ -90,8 +90,8 @@
                 <select class="custom-select" [(ngModel)]='selectedName' (change)="selectOption()"
                  formControlName='category' id="validationDefault07"  required>
                   <option selected disabled value="">اختر...</option>
-                  <option *ngFor='let outboundCategory of outbound.categories' 
-                  [ngValue]='outboundCategory'>{{outboundCategory.decription}}</option>
+                  <option *ngFor='let bouncedCategory of bounced.categories' 
+                  [ngValue]='bouncedCategory'>{{bouncedCategory.decription}}</option>
                 </select>
               </div>
               
@@ -107,7 +107,7 @@
           </div>
     
           
-          <div class="button-outbound">
+          <div class="button-bounce">
             <button class="btn btn-primary" type="submit" (click)='addCategories()'>اضف البيان</button>
             <button class="btn btn-warning" (click)='resetAllFields()'>تفريغ الحقول</button>
           </div>
@@ -151,7 +151,7 @@
         </div>
       </form>
       </div>
-      <button class="btn btn-info" (click)='addOutbound()'>صرف مهمات </button>
+      <button class="btn btn-info" (click)='addBouncedBack()'>استلام المهمات</button>
     </div>
     
   
@@ -159,10 +159,10 @@
   
   
   <!--  for incoming details  -->
-  <ng-template #incomingDetails let-modal>
+  <ng-template #bounceDetails let-modal>
     <div class="content-in" style="direction: rtl !important;">
       <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">تفاصيل إذن استلام مهمات</h4>
+        <h4 class="modal-title" id="modal-basic-title">إذن ارتجاع مهمات لمخزن</h4>
         <button type="button" class="close" aria-label="Close" style="outline: none;" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -183,10 +183,12 @@
               <label for="validationDefault03">تاريخ الاستلام :</label>
               <p class="incomeDateD" id="incomeDateD">{{rowToUpdate.createdDate | date:'dd/MM/yyyy'}}</p>
             </div>
+           
             <div class="col-md-4 mb-3 flex-form">
-              <label for="validationDefault03">المشروع :</label>
-              <p class="incomCompanyD" id="incomCompanyD">{{rowToUpdate.project.decription}} </p>
+              <label for="validationDefault06">المشروع :</label>
+              <p class="userId" id="userId" required> {{rowToUpdate.project.decription}}</p>
             </div>
+
             <div class="col-md-4 mb-3 flex-form">
               <label for="validationDefault06">استلمت أنا :</label>
               <p class="userId" id="userId" required> {{rowToUpdate.store.user.userName}}</p>

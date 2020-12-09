@@ -33,5 +33,6 @@ export class IncomingData {
       id: number;
 	decription: string;
 	address: string;
-  }
+  };
+  'storeList': any
 }

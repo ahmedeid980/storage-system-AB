@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 
+import com.ahmedeid.securityandjwt.demo.entities.Bill;
 import com.ahmedeid.securityandjwt.demo.entities.BillProduct;
 import com.ahmedeid.securityandjwt.demo.entities.Project;
 import com.ahmedeid.securityandjwt.demo.entities.Store;
@@ -77,12 +78,37 @@ public class SqlStatement {
 
 		Query userSQL = session.createQuery("SELECT sum(quantity) "
 				+ "from BillProduct where category.id= :categoryId and "
-				+ "bill.store.id= :storeId and bill.billType.id=2");
+				+ "bill.store.id= :storeId and bill.billType.id in (2,3)");
 		userSQL.setParameter("categoryId", categoryId);
 		userSQL.setParameter("storeId", storeId);
 		Long totalQuantity = (Long) userSQL.uniqueResult();
 
 		return totalQuantity;
+
+	}
+	
+	public List<Bill> getBillsByBillType(int billTypeId, int storeId) {
+
+		Session session = entityManager.unwrap(Session.class);
+
+		Query billSQL = session.createQuery("from Bill where billType.id= :billTypeId and store.id= :storeId");
+		billSQL.setParameter("billTypeId", billTypeId);
+		billSQL.setParameter("storeId", storeId);
+		List<Bill> bills = billSQL.list();
+
+		return bills;
+
+	}
+	
+	public List<Store> getStores(int storeId) {
+
+		Session session = entityManager.unwrap(Session.class);
+
+		Query billSQL = session.createQuery("from Store where id != :storeId");
+		billSQL.setParameter("storeId", storeId);
+		List<Store> stores = billSQL.list();
+
+		return stores;
 
 	}
 

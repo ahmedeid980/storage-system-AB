@@ -120,5 +120,37 @@ public class AuthController {
 		return incomingToUIBean;
 		
 	}
+	
+	@GetMapping("/getTransterDataToUIBean/{userId}")
+	public IncomingToUIBean getTransterDataToUIBean(@PathVariable("userId") int userId) {
+		
+		Store store = sql.getStoreByUserId(userId);
+		List<Store> stores = sql.getStores(store.getId());
+		List<Category> categories = categoryService.getAll();
+		
+		IncomingToUIBean incomingToUIBean = new IncomingToUIBean();
+		incomingToUIBean.setStores(store);
+		incomingToUIBean.setCategories(categories);
+		incomingToUIBean.setStoreList(stores);
+		
+		return incomingToUIBean;
+		
+	}
+	
+	@GetMapping("/getBouncedBackDataToUIBean/{userId}")
+	public IncomingToUIBean getBouncedBackDataToUIBean(@PathVariable("userId") int userId) {
+		
+		Store stores = sql.getStoreByUserId(userId);
+		Project project = sql.getProjectByStoreId(stores.getId());
+		List<Category> categories = categoryService.getAll();
+		
+		IncomingToUIBean incomingToUIBean = new IncomingToUIBean();
+		incomingToUIBean.setStores(stores);
+		incomingToUIBean.setCategories(categories);
+		incomingToUIBean.setProject(project);
+		
+		return incomingToUIBean;
+		
+	}
 
 }

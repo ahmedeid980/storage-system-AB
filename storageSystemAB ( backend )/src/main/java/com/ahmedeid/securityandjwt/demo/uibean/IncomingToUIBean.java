@@ -12,6 +12,7 @@ public class IncomingToUIBean {
 	private Store stores;
 	private List<IncomingCompany> incomingCompanise;
 	private List<Category> categories;
+	private List<Store> storeList;
 	private String codeGeneration;
 	private Project project;
 	private Long quantity;
@@ -77,7 +78,12 @@ public class IncomingToUIBean {
 		this.status = status;
 	}
 
+	public List<Store> getStoreList() {
+		return storeList;
+	}
 
-	
+	public void setStoreList(List<Store> storeList) {
+		this.storeList = storeList;
+	}
 
 }

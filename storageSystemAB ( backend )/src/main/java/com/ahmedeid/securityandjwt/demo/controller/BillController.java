@@ -17,6 +17,8 @@ import com.ahmedeid.securityandjwt.demo.repository.SqlStatement;
 import com.ahmedeid.securityandjwt.demo.services.BillProductService;
 import com.ahmedeid.securityandjwt.demo.services.BillService;
 import com.ahmedeid.securityandjwt.demo.services.IncomingCompanyService;
+import com.ahmedeid.securityandjwt.demo.services.ProjectService;
+import com.ahmedeid.securityandjwt.demo.services.StoreService;
 import com.ahmedeid.securityandjwt.demo.uibean.IncomingBean;
 import com.ahmedeid.securityandjwt.demo.uibean.ListOfBillCategory;
 import com.ahmedeid.securityandjwt.demo.wrapper.WrapperManager;
@@ -39,6 +41,12 @@ public class BillController {
 	
 	@Autowired
 	private SqlStatement sqlStatement;
+	
+	@Autowired
+	private StoreService storeService;
+	
+	@Autowired
+	private ProjectService projectService;
 
 	@GetMapping("/")
 	public List<Bill> getAll() {
@@ -98,6 +106,124 @@ public class BillController {
 		
 		return billProducts;
 		
+	}
+	
+	@PostMapping("/addOutbound")
+	public Bill addOutboundBill(@RequestBody String outboundBean) {
+
+		System.out.println(outboundBean.toString());
+		Gson gson = null;
+		IncomingBean incoming_bean = new IncomingBean();
+		Bill bill = null;
+		Bill bills = null;
+
+		try {
+
+			GsonBuilder gsonBuilder = new GsonBuilder();
+			gson = gsonBuilder.create();
+			incoming_bean = gson.fromJson(outboundBean, IncomingBean.class);
+
+			WrapperManager wrapperManager = new WrapperManager();
+			bill = wrapperManager.wrapperUIToDB(incoming_bean);
+
+			bills = billService.saveOrUpdateBill(bill);
+			Bill billId = new Bill();
+			billId.setId(bills.getId());
+			for (int i = 0; i < bill.getBillProducts().size(); i++) {
+
+				bill.getBillProducts().get(i).setBill(billId);
+			}
+			billProductsService.saveAll(bill.getBillProducts());
+
+			bills.setProject(projectService.getProjectById(bills.getProject().getId()));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return bills;
+	}
+	
+	@GetMapping("/billsByBillType/{billTypeId}/{storeId}")
+	public List<Bill> getBillsByBillType(@PathVariable("billTypeId") int billTypeId, 
+			@PathVariable("storeId") int storeId) {
+		
+		List<Bill> bills = this.sqlStatement.getBillsByBillType(billTypeId, storeId);
+		
+		return bills;
+		
+	}
+	
+	@PostMapping("/addTransfer")
+	public Bill addTransferBill(@RequestBody String transferBean) {
+
+		System.out.println(transferBean.toString());
+		Gson gson = null;
+		IncomingBean incoming_bean = new IncomingBean();
+		Bill bill = null;
+		Bill bills = null;
+
+		try {
+
+			GsonBuilder gsonBuilder = new GsonBuilder();
+			gson = gsonBuilder.create();
+			incoming_bean = gson.fromJson(transferBean, IncomingBean.class);
+
+			WrapperManager wrapperManager = new WrapperManager();
+			bill = wrapperManager.wrapperUIToDB(incoming_bean);
+
+			bills = billService.saveOrUpdateBill(bill);
+			Bill billId = new Bill();
+			billId.setId(bills.getId());
+			for (int i = 0; i < bill.getBillProducts().size(); i++) {
+
+				bill.getBillProducts().get(i).setBill(billId);
+			}
+			billProductsService.saveAll(bill.getBillProducts());
+
+			bills.setStoreTo(storeService.getStoreById(bills.getStoreTo().getId()));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return bills;
+	}
+	
+	@PostMapping("/addBouncedBack")
+	public Bill addBouncedBackBill(@RequestBody String bouncedBackBean) {
+
+		System.out.println(bouncedBackBean.toString());
+		Gson gson = null;
+		IncomingBean bounced_bean = new IncomingBean();
+		Bill bill = null;
+		Bill bills = null;
+
+		try {
+
+			GsonBuilder gsonBuilder = new GsonBuilder();
+			gson = gsonBuilder.create();
+			bounced_bean = gson.fromJson(bouncedBackBean, IncomingBean.class);
+
+			WrapperManager wrapperManager = new WrapperManager();
+			bill = wrapperManager.wrapperUIToDB(bounced_bean);
+
+			bills = billService.saveOrUpdateBill(bill);
+			Bill billId = new Bill();
+			billId.setId(bills.getId());
+			for (int i = 0; i < bill.getBillProducts().size(); i++) {
+
+				bill.getBillProducts().get(i).setBill(billId);
+			}
+			billProductsService.saveAll(bill.getBillProducts());
+
+//			bills.setIncomingCompany(incomingCompanyService.getIncomingCompanyById(bills.getIncomingCompany().getId()));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return bills;
 	}
 
 }

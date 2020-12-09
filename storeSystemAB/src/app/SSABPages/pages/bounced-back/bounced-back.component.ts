@@ -1,26 +1,24 @@
-import { formatDate } from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IncomingData } from 'src/app/classes/incoming-data';
+import { CustomService } from 'src/app/services/custom/custom.service';
 import { IntegrationService } from 'src/app/services/serviceIntegration/integration.service';
 import { StoreDataService } from 'src/app/services/storage/store-data.service';
-import { CustomService } from '../../../services/custom/custom.service';
+import { CategoryList } from '../incoming/incoming.component';
 
 @Component({
-  selector: 'app-incoming',
-  templateUrl: './incoming.component.html',
-  styleUrls: ['./incoming.component.scss']
+  selector: 'app-bounced-back',
+  templateUrl: './bounced-back.component.html',
+  styleUrls: ['./bounced-back.component.scss']
 })
-export class IncomingComponent implements OnInit {
-  selectedBill: number | undefined;
+export class BouncedBackComponent implements OnInit {
+
   formGroup = new FormGroup({
     'codeGeneration': new FormControl('',[Validators.required]),
-    'incomingCompany': new FormControl('',[Validators.required]),
     'storeId': new FormControl('',[Validators.required]),
-    'billType': new FormControl(1,[Validators.required]),
+    'billType': new FormControl(4,[Validators.required]),
     'project': new FormControl('',[Validators.required]),
-    'bill': new FormControl('',[Validators.required]),
     'listOfBillCategory': new FormControl('')
     
   });
@@ -43,14 +41,14 @@ export class IncomingComponent implements OnInit {
       
     }
 
-    income: IncomingData = new IncomingData;
+    bounced: IncomingData = new IncomingData;
     date: Date | undefined;
     storeId: any;
-  getIncomingDataToUIBean() {
-    this.integration.getIncomingDataToUIBean(this.user.user.id, this.user.token).subscribe((IncomingData: any) => {
-      if(IncomingData) {
-        this.income = IncomingData;
-        this.storeId = IncomingData.stores.id;
+    getBouncedBackDataToUIBean() {
+    this.integration.getBouncedBackDataToUIBean(this.user.user.id, this.user.token).subscribe((BouncedData: any) => {
+      if(BouncedData) {
+        this.bounced = BouncedData;
+        this.storeId = BouncedData.stores.id;
         this.date = new Date();
       }
     }, error => {
@@ -60,9 +58,9 @@ export class IncomingComponent implements OnInit {
     });
   }
 
-  open(incoming: any) {
-    this.modalService.open(incoming, { size: 'xl' });
-    this.getIncomingDataToUIBean();
+  open(bounce: any) {
+    this.modalService.open(bounce, { size: 'xl' });
+    this.getBouncedBackDataToUIBean();
   }
 
   private getDismissReason(reason: any): string {
@@ -139,10 +137,10 @@ export class IncomingComponent implements OnInit {
   }
 
   getListOfBills() {
-    this.integration.getListOfBills(1, this.store_id, this.token).subscribe((bills: any) => {
+    this.integration.getListOfBills(4, this.store_id, this.token).subscribe((bills: any) => {
       if(bills) {
         this.bill = bills;
-        this.store.storeElementWthoutSecret('SSAB-i-l', this.bill.length);
+        this.store.storeElementWthoutSecret('SSAB-bb-l', this.bill.length);
       }
     },error => {
       if(error) {
@@ -161,12 +159,13 @@ export class IncomingComponent implements OnInit {
     });
   }
   
-  addIncoming() {
-    if(this.lists.length > 0 && this.formGroup.get('incomingCompany')?.value && this.formGroup.get('codeGeneration')?.value) {
+  addBouncedBack() {
+    this.formGroup.get('project')?.setValue(this.bounced.project.id);
+    if(this.lists.length > 0 && this.formGroup.get('codeGeneration')?.value) {
       this.formGroup.get('storeId')?.setValue(this.storeId);
       this.formGroup.get('listOfBillCategory')?.setValue(this.lists);
-      this.formGroup.get('billType')?.setValue(1);
-      this.integration.addIncomingBill(this.formGroup.value, this.token).subscribe(status => {
+      this.formGroup.get('billType')?.setValue(4);
+      this.integration.addBouncedBackBill(this.formGroup.value, this.token).subscribe(status => {
         this.custom.notificationStatus_success_OR_info_OR_error('تم اضافة البيانات بنجاح' , 'أهلا' , 'success');
         this.resetAllFields();
         this.lists = [];
@@ -185,8 +184,8 @@ export class IncomingComponent implements OnInit {
     this.custom.resetComponentElement(this.formGroup);
   }
 
-  openDetails(incomingDetails: any, index: number) {
-    this.modalService.open(incomingDetails, { size: 'xl' });
+  openDetails(bounceDetails: any, index: number) {
+    this.modalService.open(bounceDetails, { size: 'xl' });
     this.getIncomToDetails(index);
   }
 
@@ -198,25 +197,6 @@ export class IncomingComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
-  }
-
-}
-export class CategoryList {
-
-  public category?: string;
-  public quantity?: number;
-  public notes?: string;
-  public unit?: string;
-  public categoryObj: any;
-
-  constructor(category: string, quantity: number, notes: string, unit: string, categoryObj: any) {
-
-    this.category = category;
-    this.quantity = quantity;
-    this.notes = notes;
-    this.unit = unit;
-    this.categoryObj = categoryObj;
-
   }
 
 }

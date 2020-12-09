@@ -26,8 +26,22 @@
                         <span class="submenu-icon ml-auto"></span>
                     </div>
                 </a>
+                <a [routerLink]='["/transfer"]' data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-start align-items-center">
+                        <span class="fa fa-share-square fa-fw mr-3"></span>
+                        <span class="menu-collapsed">إذن تحويل مهمات من مخزن الى اخر </span>
+                        <span class="submenu-icon ml-auto"></span>
+                    </div>
+                </a>
+                <a [routerLink]='["/bouncedBack"]' data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-start align-items-center">
+                        <span class="fa fa-backward fa-fw mr-3"></span>
+                        <span class="menu-collapsed">إذن ارتجاع مهمات لمخزن</span>
+                        <span class="submenu-icon ml-auto"></span>
+                    </div>
+                </a>
                 <!-- Submenu content -->
-                <div id='submenu1' class="collapse sidebar-submenu">
+                <!-- <div id='submenu1' class="collapse sidebar-submenu">
                     <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
                         <span class="menu-collapsed">Charts</span>
                     </a>
@@ -44,9 +58,9 @@
                         <span class="menu-collapsed">Profile</span>
                         <span class="submenu-icon ml-auto"></span>
                     </div>
-                </a>
+                </a> -->
                 <!-- Submenu content -->
-                <div id='submenu2' class="collapse sidebar-submenu">
+                <!-- <div id='submenu2' class="collapse sidebar-submenu">
                     <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
                         <span class="menu-collapsed">Settings</span>
                     </a>
@@ -59,39 +73,59 @@
                         <span class="fa fa-tasks fa-fw mr-3"></span>
                         <span class="menu-collapsed">Tasks</span>    
                     </div>
-                </a>
+                </a> -->
                 <!-- Separator with title -->
-                <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+                <!-- <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
                     <small>OPTIONS</small>
-                </li>
+                </li> -->
                 <!-- /END Separator -->
-                <a href="#" class="bg-dark list-group-item list-group-item-action">
+                <!-- <a href="#" class="bg-dark list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-start align-items-center">
                         <span class="fa fa-calendar fa-fw mr-3"></span>
                         <span class="menu-collapsed">Calendar</span>
                     </div>
-                </a>
-                <a href="#" class="bg-dark list-group-item list-group-item-action">
+                </a> -->
+                <!-- <a href="#" class="bg-dark list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-start align-items-center">
                         <span class="fa fa-envelope-o fa-fw mr-3"></span>
                         <span class="menu-collapsed">Messages <span class="badge badge-pill badge-primary ml-2">5</span></span>
                     </div>
-                </a>
+                </a> -->
                 <!-- Separator without title -->
                 <li class="list-group-item sidebar-separator sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
-                    <small>SETTING</small>
+                    <small>اعدادات النظام</small>
                 </li>            
                 <!-- /END Separator -->
-                <a href="#" class="bg-dark list-group-item list-group-item-action">
+                <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-start align-items-center">
-                        <span class="fa fa-cog fa-fw mr-3"></span>
-                        <span class="menu-collapsed">Setting</span>
+                        <span class="fa fa-cogs fa-fw mr-3"></span>
+                        <span class="menu-collapsed">الأعدادات</span>
+                        <span class="submenu-icon ml-auto"></span>
                     </div>
                 </a>
+                <!-- Submenu content -->
+                <div id='submenu2' class="collapse sidebar-submenu">
+                    <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                        <span class="menu-collapsed">Settings</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                        <span class="menu-collapsed">Password</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                        <span class="menu-collapsed">Password</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                        <span class="menu-collapsed">Password</span>
+                    </a>
+                </div>
+
+                <li class="list-group-item sidebar-separator sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+                    <small>مساعدات النظام</small>
+                </li>
                 <a href="#" class="bg-dark list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-start align-items-center">
-                        <span class="fa fa-question fa-fw mr-3"></span>
-                        <span class="menu-collapsed">Help</span>
+                        <span class="fa fa-question-circle fa-fw mr-3"></span>
+                        <span class="menu-cycle-collapsed">المساعدة</span>
                     </div>
                 </a>
                 

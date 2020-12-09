@@ -32,42 +32,30 @@ public class Bill {
 	@Column(name = "code_generation")
 	private String codeGeneration;
 
-	@ManyToOne(cascade = {
-			CascadeType.MERGE,
-			CascadeType.REFRESH
-	}, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "store_id", referencedColumnName = "id")
 	private Store store;
 
-	@ManyToOne(cascade = {
-			CascadeType.MERGE,
-			CascadeType.REFRESH
-	}, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "project_id", referencedColumnName = "id")
 	private Project project;
 
-	@ManyToOne(cascade = {
-			CascadeType.MERGE,
-			CascadeType.REFRESH
-	})
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
 	@JoinColumn(name = "incoming_company_id", referencedColumnName = "id")
 	private IncomingCompany incomingCompany;
 
-	@ManyToOne(cascade = {
-			CascadeType.MERGE,
-			CascadeType.REFRESH
-	},fetch = FetchType.EAGER)
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "bill_type_id", referencedColumnName = "id")
 	private BillType billType;
 
 	@Column(name = "created_date")
 	private Date createdDate;
-	
-	@OneToMany(mappedBy = "bill"
-			, fetch = FetchType.EAGER,cascade = {
-			CascadeType.MERGE,
-			CascadeType.REFRESH
-	})
+
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.EAGER)
+	@JoinColumn(name = "store_id_to", referencedColumnName = "id")
+	private Store storeTo;
+
+	@OneToMany(mappedBy = "bill", fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.REFRESH })
 	@JsonBackReference
 	private List<BillProduct> billProducts;
 
@@ -149,11 +137,19 @@ public class Bill {
 		this.billProducts = billProducts;
 	}
 
+	public Store getStoreTo() {
+		return storeTo;
+	}
+
+	public void setStoreTo(Store storeTo) {
+		this.storeTo = storeTo;
+	}
+
 	@Override
 	public String toString() {
 		return "Bill [id=" + id + ", codeGeneration=" + codeGeneration + ", store=" + store + ", project=" + project
 				+ ", incomingCompany=" + incomingCompany + ", billType=" + billType + ", createdDate=" + createdDate
-				+ "]";
+				+ ", storeTo=" + storeTo + ", billProducts=" + billProducts + "]";
 	}
 
 }

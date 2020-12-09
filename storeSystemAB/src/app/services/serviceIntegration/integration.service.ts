@@ -59,7 +59,7 @@ export class IntegrationService {
     return this.http.post(this.URI+'/bill/addIncoming/',bill , requestOptions);
   }
 
-  getListOfBills(token: string) {
+  getListOfBills(billType: number, storeId: number, token: string) {
     const headerDict = {
       'Authorization': 'ahmbas '+token
     }
@@ -67,7 +67,7 @@ export class IntegrationService {
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
     };
-    return this.http.get(this.URI+'/bill/', requestOptions);
+    return this.http.get(this.URI+'/bill/billsByBillType/'+billType+'/'+storeId, requestOptions);
   }
 
   getBillProductByBillId(token: string, billId: number) {
@@ -103,4 +103,73 @@ export class IntegrationService {
     return this.http.get(this.URI+'/category/checkAvilability/'+categoryId+'/'+storeId+'/'+quantity, requestOptions);
   }
 
+  addOutboundBill(bill: any, token: string) {
+    const headerDict = {
+      'Authorization': 'ahmbas '+token
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    // const a = [bill];
+    return this.http.post(this.URI+'/bill/addOutbound/',bill , requestOptions);
+  }
+
+  getTransterDataToUIBean(userId: number, token: string) {
+    const headerDict = {
+      'Authorization': 'ahmbas '+token
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    return this.http.get(this.URI+'/storageSystem/userlogin/getTransterDataToUIBean/'+userId, requestOptions);
+  }
+
+  addTransferBill(bill: any, token: string) {
+    const headerDict = {
+      'Authorization': 'ahmbas '+token
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    // const a = [bill];
+    return this.http.post(this.URI+'/bill/addTransfer/',bill , requestOptions);
+  }
+
+  getStoreByUserId(userId: number, token: string) {
+    const headerDict = {
+      'Authorization': 'ahmbas '+token
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+
+    return this.http.get(this.URI+'/store/getStoreByUserId/'+userId, requestOptions);
+  }
+
+  getBouncedBackDataToUIBean(userId: number, token: string) {
+    const headerDict = {
+      'Authorization': 'ahmbas '+token
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    return this.http.get(this.URI+'/storageSystem/userlogin/getBouncedBackDataToUIBean/'+userId, requestOptions);
+  }
+
+  addBouncedBackBill(bill: any, token: string) {
+    const headerDict = {
+      'Authorization': 'ahmbas '+token
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    // const a = [bill];
+    return this.http.post(this.URI+'/bill/addBouncedBack/',bill , requestOptions);
+  }
 }

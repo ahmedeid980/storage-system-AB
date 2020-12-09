@@ -21,11 +21,13 @@ import { CustomService } from './services/custom/custom.service';
 import { LoginLayoutComponent } from './SSABLayout/login-layout/login-layout.component';
 import { ASEEncryptDecryptService } from './services/security/a-s-e-encrypt-decrypt.service';
 import { OutBoundComponent } from './SSABPages/pages/out-bound/out-bound.component';
+import { TransferingComponent } from './SSABPages/pages/transfering/transfering.component';
+import { BouncedBackComponent } from './SSABPages/pages/bounced-back/bounced-back.component';
 
 @NgModule({
   declarations: [
     AppComponent,LayoutSSABComponent,NavParComponent,FooterParComponent,
-    ContentComponent,SliderComponent,IncomingComponent, LoginComponent, LoginLayoutComponent, OutBoundComponent
+    ContentComponent,SliderComponent,IncomingComponent, LoginComponent, LoginLayoutComponent, OutBoundComponent, TransferingComponent, BouncedBackComponent
   ],
   imports: [
     BrowserModule,

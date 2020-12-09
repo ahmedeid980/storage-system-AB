@@ -4,14 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ahmedeid.securityandjwt.demo.entities.BillProduct;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.annotations.SerializedName;
 
 public class IncomingBean {
 
 	private String codeGeneration;
 	private int billType;
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private int incomingCompany;
 	private int storeId;
+
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	private int project;
+
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	private int storeTo;
 
 	@SerializedName("listOfBillCategory")
 	private List<ListOfBillCategory> listOfBillCategory = new ArrayList<ListOfBillCategory>();
@@ -61,11 +69,20 @@ public class IncomingBean {
 		this.listOfBillCategory = listOfBillCategory;
 	}
 
-	@Override
-	public String toString() {
-		return "IncomingBean [codeGeneration=" + codeGeneration + ", billType=" + billType + ", incomingCompany="
-				+ incomingCompany + ", storeId=" + storeId + ", listOfBillCategory=" + listOfBillCategory + "]";
+	public int getProject() {
+		return project;
 	}
 
+	public void setProject(int project) {
+		this.project = project;
+	}
+
+	public int getStoreTo() {
+		return storeTo;
+	}
+
+	public void setStoreTo(int storeTo) {
+		this.storeTo = storeTo;
+	}
 
 }

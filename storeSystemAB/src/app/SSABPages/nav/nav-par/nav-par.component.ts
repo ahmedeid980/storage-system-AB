@@ -11,8 +11,14 @@ export class NavParComponent implements OnInit {
   constructor(private store: StoreDataService) { }
 
   incomingBillLength: any;
+  outboundBillLength: any;
+  tranferBillLength: any;
+  bouncedBillLength: any;
   ngOnInit(): void {
     this.incomingBillLength = this.store.getElementWthoutSecret('SSAB-i-l');
+    this.outboundBillLength = this.store.getElementWthoutSecret('SSAB-ob-l');
+    this.tranferBillLength = this.store.getElementWthoutSecret('SSAB-t-l');
+    this.bouncedBillLength = this.store.getElementWthoutSecret('SSAB-bb-l');
   }
 
 }

@@ -1,26 +1,26 @@
-import { formatDate } from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IncomingData } from 'src/app/classes/incoming-data';
+import { CustomService } from 'src/app/services/custom/custom.service';
 import { IntegrationService } from 'src/app/services/serviceIntegration/integration.service';
 import { StoreDataService } from 'src/app/services/storage/store-data.service';
-import { CustomService } from '../../../services/custom/custom.service';
+import { CategoryList } from '../incoming/incoming.component';
 
 @Component({
-  selector: 'app-incoming',
-  templateUrl: './incoming.component.html',
-  styleUrls: ['./incoming.component.scss']
+  selector: 'app-transfering',
+  templateUrl: './transfering.component.html',
+  styleUrls: ['./transfering.component.scss']
 })
-export class IncomingComponent implements OnInit {
-  selectedBill: number | undefined;
+export class TransferingComponent implements OnInit {
+
+  
   formGroup = new FormGroup({
     'codeGeneration': new FormControl('',[Validators.required]),
-    'incomingCompany': new FormControl('',[Validators.required]),
     'storeId': new FormControl('',[Validators.required]),
-    'billType': new FormControl(1,[Validators.required]),
-    'project': new FormControl('',[Validators.required]),
+    'billType': new FormControl(3,[Validators.required]),
     'bill': new FormControl('',[Validators.required]),
+    'storeTo': new FormControl('',[Validators.required]),
     'listOfBillCategory': new FormControl('')
     
   });
@@ -33,24 +33,22 @@ export class IncomingComponent implements OnInit {
 
   closeResult = '';
   user: any;
-  store_id: any;
   constructor(private modalService: NgbModal,
     private integration: IntegrationService,
     private store: StoreDataService,
     private custom: CustomService) {
 
       this.user = this.store.getStoreElement('SSAB-u');
-      
     }
 
-    income: IncomingData = new IncomingData;
+    transfers: IncomingData = new IncomingData;
     date: Date | undefined;
     storeId: any;
-  getIncomingDataToUIBean() {
-    this.integration.getIncomingDataToUIBean(this.user.user.id, this.user.token).subscribe((IncomingData: any) => {
-      if(IncomingData) {
-        this.income = IncomingData;
-        this.storeId = IncomingData.stores.id;
+    getTransterDataToUIBean() {
+    this.integration.getTransterDataToUIBean(this.user.user.id, this.user.token).subscribe((transferData: any) => {
+      if(transferData) {
+        this.transfers = transferData;
+        this.storeId = transferData.stores.id;
         this.date = new Date();
       }
     }, error => {
@@ -60,15 +58,18 @@ export class IncomingComponent implements OnInit {
     });
   }
 
-  open(incoming: any) {
-    this.modalService.open(incoming, { size: 'xl' });
-    this.getIncomingDataToUIBean();
+  open(transfer: any) {
+    this.modalService.open(transfer, { size: 'xl' });
+    this.getTransterDataToUIBean();
   }
 
   private getDismissReason(reason: any): string {
+    
     if (reason === ModalDismissReasons.ESC) {
+      this.resetAllFields();
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      this.resetAllFields();
       return 'by clicking on a backdrop';
     } else {
       return `with: ${reason}`;
@@ -94,11 +95,18 @@ export class IncomingComponent implements OnInit {
         return (row.category === this.tableFormGroup.get('category')?.value.decription)
       });
       if(!this.findRow) {
-        const newRow = new CategoryList(this.categoryName,this.tableFormGroup.get('quantity')?.value,
-        this.tableFormGroup.get('notes')?.value,this.unit, this.tableFormGroup.get('category')?.value);
-        this.lists.push(newRow);
-        this.resettableinputs();
-      }else {
+        this.integration.checkAvilability(this.tableFormGroup.get('category')?.value.id,
+        this.transfers.stores.id, this.tableFormGroup.get('quantity')?.value, this.token).subscribe((incomingToUIBean: any) => {
+          if(incomingToUIBean.status) {
+            const newRow = new CategoryList(this.categoryName,this.tableFormGroup.get('quantity')?.value,
+            this.tableFormGroup.get('notes')?.value,this.unit, this.tableFormGroup.get('category')?.value);
+            this.lists.push(newRow);
+            this.resettableinputs();
+          } else {
+            this.custom.notificationStatus_success_OR_info_OR_error( incomingToUIBean.quantity+'كمية البيان التى ادخلتها الان اكبر من الكمية داخل المخزن','تحزير '+ 'الكميه المتاحه فقط ', 'warning');
+          }
+        });
+      } else {
         this.custom.notificationStatus_success_OR_info_OR_error( 'هذا الصنف تم اضافته من قبل', 'تحزير', 'warning');
       }
     } else {
@@ -126,23 +134,22 @@ export class IncomingComponent implements OnInit {
   }
   token: any;
   bill: any;
+  store_id: any;
   ngOnInit(): void {
     this.token = this.store.getStoreElement('SSAB-t');
-    
     this.integration.getStoreByUserId(this.user.user.id, this.token).subscribe((store: any) => {
       if(store) {
         this.store_id = store.id;
       }
       this.getListOfBills();
     });
-    
   }
 
   getListOfBills() {
-    this.integration.getListOfBills(1, this.store_id, this.token).subscribe((bills: any) => {
+    this.integration.getListOfBills(3 ,this.store_id ,this.token).subscribe((bills: any) => {
       if(bills) {
         this.bill = bills;
-        this.store.storeElementWthoutSecret('SSAB-i-l', this.bill.length);
+        this.store.storeElementWthoutSecret('SSAB-t-l', this.bill.length);
       }
     },error => {
       if(error) {
@@ -152,7 +159,7 @@ export class IncomingComponent implements OnInit {
   }
 
   billProductList: any;
-  getIncomToDetails(index: number) {
+  getTransferDetails(index: number) {
     this.rowToUpdate = this.bill[index];
     this.integration.getBillProductByBillId(this.token, this.rowToUpdate.id).subscribe(billProducts => {
       if(billProducts) {
@@ -161,14 +168,15 @@ export class IncomingComponent implements OnInit {
     });
   }
   
-  addIncoming() {
-    if(this.lists.length > 0 && this.formGroup.get('incomingCompany')?.value && this.formGroup.get('codeGeneration')?.value) {
+  addTransfer() {
+    if(this.lists.length > 0 && this.formGroup.get('storeTo')?.value && this.formGroup.get('codeGeneration')?.value) {
       this.formGroup.get('storeId')?.setValue(this.storeId);
       this.formGroup.get('listOfBillCategory')?.setValue(this.lists);
-      this.formGroup.get('billType')?.setValue(1);
-      this.integration.addIncomingBill(this.formGroup.value, this.token).subscribe(status => {
+      this.formGroup.get('billType')?.setValue(3);
+      this.integration.addTransferBill(this.formGroup.value, this.token).subscribe(status => {
         this.custom.notificationStatus_success_OR_info_OR_error('تم اضافة البيانات بنجاح' , 'أهلا' , 'success');
         this.resetAllFields();
+        this.resettableinputs();
         this.lists = [];
         this.modalService.dismissAll();
         this.getListOfBills();
@@ -183,11 +191,12 @@ export class IncomingComponent implements OnInit {
   resetAllFields() {
     this.resettableinputs();
     this.custom.resetComponentElement(this.formGroup);
+    
   }
 
-  openDetails(incomingDetails: any, index: number) {
-    this.modalService.open(incomingDetails, { size: 'xl' });
-    this.getIncomToDetails(index);
+  openDetails(transferDetails: any, index: number) {
+    this.modalService.open(transferDetails, { size: 'xl' });
+    this.getTransferDetails(index);
   }
 
   private getDismissReasonDetails(reason: any): string {
@@ -198,25 +207,6 @@ export class IncomingComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
-  }
-
-}
-export class CategoryList {
-
-  public category?: string;
-  public quantity?: number;
-  public notes?: string;
-  public unit?: string;
-  public categoryObj: any;
-
-  constructor(category: string, quantity: number, notes: string, unit: string, categoryObj: any) {
-
-    this.category = category;
-    this.quantity = quantity;
-    this.notes = notes;
-    this.unit = unit;
-    this.categoryObj = categoryObj;
-
   }
 
 }

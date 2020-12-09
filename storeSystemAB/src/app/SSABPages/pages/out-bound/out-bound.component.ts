@@ -18,7 +18,7 @@ export class OutBoundComponent implements OnInit {
   formGroup = new FormGroup({
     'codeGeneration': new FormControl('',[Validators.required]),
     'storeId': new FormControl('',[Validators.required]),
-    'billType': new FormControl('',[Validators.required]),
+    'billType': new FormControl(2,[Validators.required]),
     'project': new FormControl('',[Validators.required]),
     'bill': new FormControl('',[Validators.required]),
     'listOfBillCategory': new FormControl('')
@@ -131,16 +131,22 @@ export class OutBoundComponent implements OnInit {
   }
   token: any;
   bill: any;
+  store_id: any;
   ngOnInit(): void {
     this.token = this.store.getStoreElement('SSAB-t');
-    this.getListOfBills();
+    this.integration.getStoreByUserId(this.user.user.id, this.token).subscribe((store: any) => {
+      if(store) {
+        this.store_id = store.id;
+      }
+      this.getListOfBills();
+    });
   }
 
   getListOfBills() {
-    this.integration.getListOfBills(this.token).subscribe((bills: any) => {
+    this.integration.getListOfBills(2 , this.store_id, this.token).subscribe((bills: any) => {
       if(bills) {
         this.bill = bills;
-        this.store.storeElementWthoutSecret('SSAB-i-l', this.bill.length);
+        this.store.storeElementWthoutSecret('SSAB-ob-l', this.bill.length);
       }
     },error => {
       if(error) {
@@ -159,17 +165,22 @@ export class OutBoundComponent implements OnInit {
     });
   }
   
-  addIncoming() {
-    if(this.lists.length > 0 && this.formGroup.get('incomingCompany')?.value && this.formGroup.get('codeGeneration')?.value) {
+  addOutbound() {
+    this.formGroup.get('project')?.setValue(this.outbound.project.id);
+    if(this.lists.length > 0 && this.formGroup.get('codeGeneration')?.value) {
       this.formGroup.get('storeId')?.setValue(this.storeId);
       this.formGroup.get('listOfBillCategory')?.setValue(this.lists);
-      this.formGroup.get('billType')?.setValue(1);
-      this.integration.addIncomingBill(this.formGroup.value, this.token).subscribe(status => {
-        this.custom.notificationStatus_success_OR_info_OR_error('تم اضافة البيانات بنجاح' , 'أهلا' , 'success');
-        this.resetAllFields();
-        this.lists = [];
-        this.modalService.dismissAll();
-        this.getListOfBills();
+      this.formGroup.get('billType')?.setValue(2);
+      this.integration.addOutboundBill(this.formGroup.value, this.token).subscribe(status => {
+        console.log(status);
+        if(status) {
+          this.custom.notificationStatus_success_OR_info_OR_error('تم اضافة البيانات بنجاح' , 'أهلا' , 'success');
+          this.resetAllFields();
+          this.lists = [];
+          this.modalService.dismissAll();
+          this.getListOfBills();
+        }
+        
       }, error => {
         this.custom.notificationStatus_success_OR_info_OR_error('حدث خطا عند اضافة البيانات' , 'خطأ' , 'error');
       });

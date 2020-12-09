@@ -1,6 +1,6 @@
 
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">شركات المقاولات</a>
+    <a class="navbar-brand" href="#">الشركة المتحدة للتجارة والمقاولات</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -43,32 +43,35 @@
             الواردات
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            <i class="fa fa-globe">
-              <span class="badge badge-success">11</span>
+        <li class="nav-item" placement="bottom" placement="bottom"
+        ngbPopover="الصادرات الخاصة بك والمشروع القائم , يمكنك ان تجد التفاصيل بالنقر على الكود الخاص بها داخل الجدول المدرج" popoverTitle="الصادرات وعددها">
+          <a class="nav-link">
+            <i class="fa fa-arrow-circle-left">
+              <span class="badge badge-success">{{outboundBillLength}}</span>
             </i>
-            Test
+            الصادرات
+          </a>
+        </li>
+        <li class="nav-item" placement="bottom" placement="bottom"
+        ngbPopover="التحويلات الخاصة بك والمشروع القائم , يمكنك ان تجد التفاصيل بالنقر على الكود الخاص بها داخل الجدول المدرج" popoverTitle="التحويلات وعددها">
+          <a class="nav-link">
+            <i class="fa fa-share-square">
+              <span class="badge badge-success">{{tranferBillLength}}</span>
+            </i>
+            التحويلات بين المخازن
+          </a>
+        </li>
+        <li class="nav-item" placement="bottom" placement="bottom"
+        ngbPopover="المرتجعات الخاصة بك والمشروع القائم , يمكنك ان تجد التفاصيل بالنقر على الكود الخاص بها داخل الجدول المدرج" popoverTitle="المرتجعات وعددها">
+          <a class="nav-link">
+            <i class="fa fa-backward">
+              <span class="badge badge-warning">{{bouncedBillLength}}</span>
+            </i>
+            المرتجعات
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">
-            <i class="fa fa-globe">
-              <span class="badge badge-success">11</span>
-            </i>
-            Hamada
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            <i class="fa fa-globe">
-              <span class="badge badge-success">11</span>
-            </i>
-            Hamada
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
+          <a class="nav-link">
             <i class="fa fa-globe">
               <span class="badge badge-success">11</span>
             </i>

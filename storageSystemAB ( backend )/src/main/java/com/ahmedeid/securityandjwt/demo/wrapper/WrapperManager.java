@@ -9,6 +9,7 @@ import com.ahmedeid.securityandjwt.demo.entities.BillProduct;
 import com.ahmedeid.securityandjwt.demo.entities.BillType;
 import com.ahmedeid.securityandjwt.demo.entities.Category;
 import com.ahmedeid.securityandjwt.demo.entities.IncomingCompany;
+import com.ahmedeid.securityandjwt.demo.entities.Project;
 import com.ahmedeid.securityandjwt.demo.entities.Store;
 import com.ahmedeid.securityandjwt.demo.uibean.IncomingBean;
 import com.ahmedeid.securityandjwt.demo.uibean.ListOfBillCategory;
@@ -35,12 +36,24 @@ public class WrapperManager {
 			bill.setIncomingCompany(incomingCompany);
 		}
 		
+		if(incoming_bean.getProject() != 0) {
+			Project project = new Project();
+			project.setId(incoming_bean.getProject());
+			bill.setProject(project);
+		}
+		
 		bill.setCreatedDate(new Date());
 
 		if(incoming_bean.getStoreId() != 0) {
 			Store store = new Store();
 			store.setId(incoming_bean.getStoreId());
 			bill.setStore(store);
+		}
+		
+		if(incoming_bean.getStoreTo() != 0) {
+			Store store = new Store();
+			store.setId(incoming_bean.getStoreTo());
+			bill.setStoreTo(store);
 		}
 		
 		List<BillProduct> billProducts = new ArrayList<BillProduct>();
